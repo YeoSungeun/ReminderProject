@@ -22,6 +22,8 @@
 		A022434F2C3402BB00FC3552 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; };
 		A02243512C3414CF00FC3552 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243502C3414CF00FC3552 /* ListTableViewCell.swift */; };
 		A02243542C34176100FC3552 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A02243532C34176100FC3552 /* SnapKit */; };
+		A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243562C344EF600FC3552 /* PostItemButtonView.swift */; };
+		A02243592C34AE1300FC3552 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243582C34AE1300FC3552 /* RealmModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		A02243472C33FD8100FC3552 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		A022434A2C34003C00FC3552 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A02243502C3414CF00FC3552 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		A02243562C344EF600FC3552 /* PostItemButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemButtonView.swift; sourceTree = "<group>"; };
+		A02243582C34AE1300FC3552 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +81,7 @@
 			children = (
 				A022434C2C3401A000FC3552 /* Resource */,
 				A022433F2C33FC0D00FC3552 /* Global */,
-				A022433E2C33FC0200FC3552 /* Realm */,
+				A022433E2C33FC0200FC3552 /* DB */,
 				A02243372C33FB8C00FC3552 /* Screen */,
 				A02243232C33FA2600FC3552 /* AppDelegate.swift */,
 				A02243252C33FA2600FC3552 /* SceneDelegate.swift */,
@@ -113,16 +117,18 @@
 			path = Post;
 			sourceTree = "<group>";
 		};
-		A022433E2C33FC0200FC3552 /* Realm */ = {
+		A022433E2C33FC0200FC3552 /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				A02243582C34AE1300FC3552 /* RealmModel.swift */,
 			);
-			path = Realm;
+			path = DB;
 			sourceTree = "<group>";
 		};
 		A022433F2C33FC0D00FC3552 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				A02243552C344ECA00FC3552 /* Custom */,
 				A02243492C33FD9200FC3552 /* Extension */,
 				A02243422C33FD3100FC3552 /* Base */,
 			);
@@ -154,6 +160,14 @@
 				A022432C2C33FA2800FC3552 /* Assets.xcassets */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		A02243552C344ECA00FC3552 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				A02243562C344EF600FC3552 /* PostItemButtonView.swift */,
+			);
+			name = Custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,8 +250,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A022434B2C34003C00FC3552 /* UIViewController+Extension.swift in Sources */,
+				A02243592C34AE1300FC3552 /* RealmModel.swift in Sources */,
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,
 				A02243242C33FA2600FC3552 /* AppDelegate.swift in Sources */,
+				A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */,
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,

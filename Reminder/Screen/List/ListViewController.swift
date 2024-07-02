@@ -7,8 +7,9 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
-final class ListViewController: BaseViewController {
+final class ListViewController: UIViewController {
     
     let listTitleLabel = {
         let view = UILabel()
@@ -33,7 +34,7 @@ final class ListViewController: BaseViewController {
         return view
     }()
     
-    var list: [(String, String?, String?, String?, Bool)] = [] {
+    var list: Results<Todo>! {
         didSet {
             if list.count == 0 {
                 noneListLabel.isHidden = false
@@ -45,17 +46,29 @@ final class ListViewController: BaseViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        list = [("키보드구매","예쁜 키캡 알아보기","2022.02.23","#어쩌구", false),("키보드구매", nil,"2022.02.23","#어쩌구", false),("키보드구매","예쁜 키캡 알아보기",nil,"#어쩌구", false),("키보드구매","예쁜 키캡 알아보기",nil, nil, true)]
+    let realm = try! Realm()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+        
+        tableView.reloadData()
     }
     
-    override func configureHierarchy() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        list = realm.objects(Todo.self)
+        print(realm.configuration.fileURL)
+        configureHierarchy()
+        configureLayout()
+        configureView()
+    }
+    
+    func configureHierarchy() {
         view.addSubview(listTitleLabel)
         view.addSubview(tableView)
         view.addSubview(noneListLabel)
     }
-    override func configureLayout() {
+    func configureLayout() {
         listTitleLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(40)
@@ -69,14 +82,15 @@ final class ListViewController: BaseViewController {
         }
         
     }
-    override func configureView() {
-        super.configureView()
+    func configureView() {
+        view.backgroundColor = .systemBackground
         listTitleLabel.text = "전체"
         tableView.backgroundColor = .systemBackground
         let leftBarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(leftBarButtonItemClicked))
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
         navigationItem.leftBarButtonItem = leftBarItem
         navigationItem.rightBarButtonItem = rightBarItem
+    
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
@@ -84,12 +98,19 @@ final class ListViewController: BaseViewController {
     }
     @objc func leftBarButtonItemClicked() {
         print(#function)
+        let vc = PostViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        present(nav, animated: true)
     }
     @objc func rightBarButtonItemClicked() {
         print(#function)
     }
     @objc func radioButtonClicked(sender: UIButton) {
-        list[sender.tag].4.toggle()
+        if list[sender.tag].isDone{
+            //update관련
+        } else {
+            
+        }
         tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
     }
 
@@ -103,12 +124,12 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
         let data = list[indexPath.row]
-        cell.titleLabel.text = data.0
-        cell.memoLabel.text = data.1
-        cell.dueDateLabel.text = data.2
-        cell.tagLabel.text = data.3
+        cell.titleLabel.text = data.title
+        cell.memoLabel.text = data.memo
+        cell.dueDateLabel.text = data.dudate
+        cell.tagLabel.text = data.tag
         cell.radioButton.tag = indexPath.row
-        if data.4 {
+        if data.isDone {
             let image = UIImage(systemName: "circle.inset.filled")
             cell.radioButton.setImage( image, for: .normal)
             cell.titleLabel.textColor = .systemGray
@@ -117,7 +138,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.radioButton.setImage( image, for: .normal)
             cell.titleLabel.textColor = .black
         }
-        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
+//        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         
         return cell
     }
