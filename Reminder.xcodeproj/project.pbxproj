@@ -15,6 +15,13 @@
 		A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A022433A2C33FBF600FC3552 /* ListViewController.swift */; };
 		A022433D2C33FBFC00FC3552 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A022433C2C33FBFC00FC3552 /* PostViewController.swift */; };
 		A02243412C33FC5900FC3552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A02243402C33FC5900FC3552 /* .gitignore */; };
+		A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243432C33FD5400FC3552 /* BaseViewController.swift */; };
+		A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243452C33FD6A00FC3552 /* BaseTableVeiwCell.swift */; };
+		A02243482C33FD8100FC3552 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243472C33FD8100FC3552 /* Reusable.swift */; };
+		A022434B2C34003C00FC3552 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A022434A2C34003C00FC3552 /* UIViewController+Extension.swift */; };
+		A022434F2C3402BB00FC3552 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; };
+		A02243512C3414CF00FC3552 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243502C3414CF00FC3552 /* ListTableViewCell.swift */; };
+		A02243542C34176100FC3552 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A02243532C34176100FC3552 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +35,11 @@
 		A022433A2C33FBF600FC3552 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		A022433C2C33FBFC00FC3552 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		A02243402C33FC5900FC3552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A02243432C33FD5400FC3552 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		A02243452C33FD6A00FC3552 /* BaseTableVeiwCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableVeiwCell.swift; sourceTree = "<group>"; };
+		A02243472C33FD8100FC3552 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		A022434A2C34003C00FC3552 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		A02243502C3414CF00FC3552 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A022434F2C3402BB00FC3552 /* RealmSwift in Frameworks */,
+				A02243542C34176100FC3552 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,14 +75,13 @@
 		A02243222C33FA2600FC3552 /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
+				A022434C2C3401A000FC3552 /* Resource */,
 				A022433F2C33FC0D00FC3552 /* Global */,
 				A022433E2C33FC0200FC3552 /* Realm */,
 				A02243372C33FB8C00FC3552 /* Screen */,
 				A02243232C33FA2600FC3552 /* AppDelegate.swift */,
 				A02243252C33FA2600FC3552 /* SceneDelegate.swift */,
 				A02243272C33FA2600FC3552 /* ViewController.swift */,
-				A022432C2C33FA2800FC3552 /* Assets.xcassets */,
-				A022432E2C33FA2800FC3552 /* LaunchScreen.storyboard */,
 				A02243312C33FA2800FC3552 /* Info.plist */,
 			);
 			path = Reminder;
@@ -87,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				A022433A2C33FBF600FC3552 /* ListViewController.swift */,
+				A02243502C3414CF00FC3552 /* ListTableViewCell.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -109,8 +123,37 @@
 		A022433F2C33FC0D00FC3552 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				A02243492C33FD9200FC3552 /* Extension */,
+				A02243422C33FD3100FC3552 /* Base */,
 			);
 			name = Global;
+			sourceTree = "<group>";
+		};
+		A02243422C33FD3100FC3552 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				A02243432C33FD5400FC3552 /* BaseViewController.swift */,
+				A02243452C33FD6A00FC3552 /* BaseTableVeiwCell.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		A02243492C33FD9200FC3552 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A02243472C33FD8100FC3552 /* Reusable.swift */,
+				A022434A2C34003C00FC3552 /* UIViewController+Extension.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		A022434C2C3401A000FC3552 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A022432E2C33FA2800FC3552 /* LaunchScreen.storyboard */,
+				A022432C2C33FA2800FC3552 /* Assets.xcassets */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +172,10 @@
 			dependencies = (
 			);
 			name = Reminder;
+			packageProductDependencies = (
+				A022434E2C3402BB00FC3552 /* RealmSwift */,
+				A02243532C34176100FC3552 /* SnapKit */,
+			);
 			productName = Reminder;
 			productReference = A02243202C33FA2600FC3552 /* Reminder.app */;
 			productType = "com.apple.product-type.application";
@@ -157,6 +204,10 @@
 				Base,
 			);
 			mainGroup = A02243172C33FA2600FC3552;
+			packageReferences = (
+				A022434D2C3402BB00FC3552 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = A02243212C33FA2600FC3552 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -184,11 +235,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A022434B2C34003C00FC3552 /* UIViewController+Extension.swift in Sources */,
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,
 				A02243242C33FA2600FC3552 /* AppDelegate.swift in Sources */,
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
+				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
 				A022433D2C33FBFC00FC3552 /* PostViewController.swift in Sources */,
+				A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */,
+				A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */,
+				A02243512C3414CF00FC3552 /* ListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +467,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A022434D2C3402BB00FC3552 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A022434E2C3402BB00FC3552 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A022434D2C3402BB00FC3552 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		A02243532C34176100FC3552 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A02243182C33FA2600FC3552 /* Project object */;
 }
