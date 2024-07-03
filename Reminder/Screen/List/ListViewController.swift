@@ -117,6 +117,7 @@ final class ListViewController: UIViewController {
         }
         tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
     }
+    // TODO: pull down button으로 변경하기 _ 정렬 기준 보완하기
     func showSortActionSheet() {
         let alert = UIAlertController(
             title: nil,
@@ -192,6 +193,18 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: nil) { action, view, completionHandler in
+            let data = self.realm.object(ofType: Todo.self, forPrimaryKey: self.list[indexPath.row].id)!
+            try! self.realm.write {
+                self.realm.delete(self.list[indexPath.row])
+            }
+            tableView.reloadData()
+        }
+        delete.image = UIImage(systemName: "trash")
+        
+        return UISwipeActionsConfiguration(actions: [delete])
     }
     
 }
