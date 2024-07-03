@@ -58,9 +58,13 @@ class ListTableViewCell: BaseTableVeiwCell {
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(20)
             make.height.equalTo(20)
         }
-        titleLabel.snp.makeConstraints { make in
+        priorityLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(12)
             make.leading.equalTo(radioButton.snp.trailing).offset(12)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(12)
+            make.leading.equalTo(priorityLabel.snp.trailing).offset(4)
         }
         memoLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
@@ -82,5 +86,6 @@ class ListTableViewCell: BaseTableVeiwCell {
     }
     override func configureView() {
         radioButton.tintColor = .systemGray
+        priorityLabel.textColor = .systemBlue
     }
 }

@@ -90,7 +90,7 @@ final class ListViewController: UIViewController {
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
         navigationItem.leftBarButtonItem = leftBarItem
         navigationItem.rightBarButtonItem = rightBarItem
-    
+       
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
@@ -107,6 +107,7 @@ final class ListViewController: UIViewController {
     }
     @objc func rightBarButtonItemClicked() {
         print(#function)
+        showSortActionSheet()
     }
     @objc func radioButtonClicked(sender: UIButton) {
         if list[sender.tag].isDone{
@@ -116,7 +117,35 @@ final class ListViewController: UIViewController {
         }
         tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
     }
+    func showSortActionSheet() {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet)
+        
+        // 2. 버튼 만들기
+        let basic = UIAlertAction(title: "기본", style: .default) { _ in
+            self.list = self.realm.objects(Todo.self)
+            self.tableView.reloadData()
+        }
+        let dueDate = UIAlertAction(title: "마감일", style: .default) { _ in
+            self.list = self.realm.objects(Todo.self).sorted(byKeyPath: "duedate", ascending: true)
+            self.tableView.reloadData()
+        }
+        let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
+            self.list = self.realm.objects(Todo.self).where{
+                $0.priority == .upper
+            }
+            self.tableView.reloadData()
+        }
 
+        alert.addAction(basic)
+        alert.addAction(dueDate)
+        alert.addAction(priority)
+        
+        present(alert, animated: true)
+    }
+    
 }
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -128,6 +157,16 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
         let data = list[indexPath.row]
         cell.titleLabel.text = data.title
+        switch data.priority {
+            case.upper:
+                cell.priorityLabel.text = "!!!"
+            case.middle:
+                cell.priorityLabel.text = "!!"
+            case.lower:
+                cell.priorityLabel.text = "!"
+            case .none:
+                cell.priorityLabel.text = nil
+        }
         cell.memoLabel.text = data.memo
         cell.dueDateLabel.text = data.duedate
         if let tag = data.tag {
@@ -143,7 +182,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.radioButton.setImage( image, for: .normal)
             cell.titleLabel.textColor = .black
         }
-//        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
+        //        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         
         return cell
     }
@@ -152,7 +191,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        tableView.reloadRows(at: [indexPath], with: .automatic)
+        //        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
 }
