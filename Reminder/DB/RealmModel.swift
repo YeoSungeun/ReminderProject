@@ -10,20 +10,28 @@ import RealmSwift
 
 //id 제목, 메모, 마감일, isdone
 
+enum Priority: String, PersistableEnum {
+    case upper
+    case middle
+    case lower
+}
+
 class Todo: Object {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var title: String
     @Persisted var memo: String?
-    @Persisted var dudate: String? // TODO: date로 변경하기
+    @Persisted var duedate: String?
     @Persisted var tag: String?
+    @Persisted var priority: Priority?
     @Persisted var isDone: Bool
     
-    convenience init(title: String, memo: String? , dudate: String?) {
+    convenience init(title: String, memo: String? , duedate: String?, tag: String?, priority: Priority?) {
         self.init()
         self.title = title
         self.memo = memo
-        self.dudate = dudate
-        self.tag = "#쇼핑"
+        self.duedate = duedate
+        self.tag = tag
+        self.priority = priority
         self.isDone = false
     }
 }
