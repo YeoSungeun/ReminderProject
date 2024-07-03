@@ -14,6 +14,12 @@ class ListTableViewCell: BaseTableVeiwCell {
         view.setImage(UIImage(systemName: "circle"), for: .normal) // t/f에 따라서 circle.inset.filled
         return view
     }()
+    let priorityLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 15)
+        view.textColor = .systemBlue
+        return view
+    }()
     let titleLabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 16)
@@ -40,6 +46,7 @@ class ListTableViewCell: BaseTableVeiwCell {
     
     override func configureHierarchy() {
         contentView.addSubview(radioButton)
+        contentView.addSubview(priorityLabel)
         contentView.addSubview(titleLabel)
         contentView.addSubview(memoLabel)
         contentView.addSubview(dueDateLabel)
@@ -63,6 +70,7 @@ class ListTableViewCell: BaseTableVeiwCell {
         dueDateLabel.snp.makeConstraints { make in
             make.top.equalTo(memoLabel.snp.bottom).offset(4)
             make.leading.equalTo(titleLabel.snp.leading)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
           
         }
         tagLabel.snp.makeConstraints { make in

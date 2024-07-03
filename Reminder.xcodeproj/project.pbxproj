@@ -24,6 +24,10 @@
 		A02243542C34176100FC3552 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A02243532C34176100FC3552 /* SnapKit */; };
 		A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243562C344EF600FC3552 /* PostItemButtonView.swift */; };
 		A02243592C34AE1300FC3552 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243582C34AE1300FC3552 /* RealmModel.swift */; };
+		A02243612C35594500FC3552 /* DuedateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243602C35594500FC3552 /* DuedateViewController.swift */; };
+		A02243672C357B6600FC3552 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243662C357B6600FC3552 /* TagViewController.swift */; };
+		A02243692C357B7300FC3552 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243682C357B7300FC3552 /* PriorityViewController.swift */; };
+		A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,9 @@
 		A02243502C3414CF00FC3552 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		A02243562C344EF600FC3552 /* PostItemButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemButtonView.swift; sourceTree = "<group>"; };
 		A02243582C34AE1300FC3552 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		A02243602C35594500FC3552 /* DuedateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DuedateViewController.swift; path = ../Post/DuedateViewController.swift; sourceTree = "<group>"; };
+		A02243662C357B6600FC3552 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		A02243682C357B7300FC3552 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +60,7 @@
 			files = (
 				A022434F2C3402BB00FC3552 /* RealmSwift in Frameworks */,
 				A02243542C34176100FC3552 /* SnapKit in Frameworks */,
+				A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +102,9 @@
 		A02243372C33FB8C00FC3552 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				A02243652C357B3300FC3552 /* Priority */,
+				A02243642C357B2700FC3552 /* Tag */,
+				A02243632C357AF600FC3552 /* DueDate */,
 				A02243392C33FBDC00FC3552 /* Post */,
 				A02243382C33FB9700FC3552 /* List */,
 			);
@@ -170,6 +181,30 @@
 			name = Custom;
 			sourceTree = "<group>";
 		};
+		A02243632C357AF600FC3552 /* DueDate */ = {
+			isa = PBXGroup;
+			children = (
+				A02243602C35594500FC3552 /* DuedateViewController.swift */,
+			);
+			path = DueDate;
+			sourceTree = "<group>";
+		};
+		A02243642C357B2700FC3552 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				A02243662C357B6600FC3552 /* TagViewController.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
+		A02243652C357B3300FC3552 /* Priority */ = {
+			isa = PBXGroup;
+			children = (
+				A02243682C357B7300FC3552 /* PriorityViewController.swift */,
+			);
+			path = Priority;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -189,6 +224,7 @@
 			packageProductDependencies = (
 				A022434E2C3402BB00FC3552 /* RealmSwift */,
 				A02243532C34176100FC3552 /* SnapKit */,
+				A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */,
 			);
 			productName = Reminder;
 			productReference = A02243202C33FA2600FC3552 /* Reminder.app */;
@@ -221,6 +257,7 @@
 			packageReferences = (
 				A022434D2C3402BB00FC3552 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				A022436A2C359DE100FC3552 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = A02243212C33FA2600FC3552 /* Products */;
 			projectDirPath = "";
@@ -254,6 +291,7 @@
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,
 				A02243242C33FA2600FC3552 /* AppDelegate.swift in Sources */,
 				A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */,
+				A02243612C35594500FC3552 /* DuedateViewController.swift in Sources */,
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
@@ -261,6 +299,8 @@
 				A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */,
 				A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */,
 				A02243512C3414CF00FC3552 /* ListTableViewCell.swift in Sources */,
+				A02243672C357B6600FC3552 /* TagViewController.swift in Sources */,
+				A02243692C357B7300FC3552 /* PriorityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +541,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		A022436A2C359DE100FC3552 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -513,6 +561,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A022436A2C359DE100FC3552 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

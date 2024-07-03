@@ -100,6 +100,9 @@ final class ListViewController: UIViewController {
         print(#function)
         let vc = PostViewController()
         let nav = UINavigationController(rootViewController: vc)
+        vc.reloadTableView = {
+            self.tableView.reloadData()
+        }
         present(nav, animated: true)
     }
     @objc func rightBarButtonItemClicked() {
@@ -126,8 +129,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         let data = list[indexPath.row]
         cell.titleLabel.text = data.title
         cell.memoLabel.text = data.memo
-        cell.dueDateLabel.text = data.dudate
-        cell.tagLabel.text = data.tag
+        cell.dueDateLabel.text = data.duedate
+        if let tag = data.tag {
+            cell.tagLabel.text = "#" + data.tag!
+        }
         cell.radioButton.tag = indexPath.row
         if data.isDone {
             let image = UIImage(systemName: "circle.inset.filled")
@@ -146,7 +151,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
 }
