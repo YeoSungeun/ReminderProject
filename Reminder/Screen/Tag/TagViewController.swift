@@ -53,7 +53,10 @@ final class TagViewController: BaseViewController {
     }
     @objc func backButtonClicked() {
         print(#function)
-        guard let tag = tagTextField.text, !tag.isEmpty else { return }
+        guard let tag = tagTextField.text, !tag.isEmpty else {
+            navigationController?.popViewController(animated: true)
+            return
+        }
         getTag?(tag)
         navigationController?.popViewController(animated: true)
     }
