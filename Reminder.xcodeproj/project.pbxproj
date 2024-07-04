@@ -31,7 +31,22 @@
 		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
 		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
 		A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */; };
+		A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A0DE66AE2C3684FF00DF5610 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A02243202C33FA2600FC3552 /* Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +247,7 @@
 				A022431C2C33FA2600FC3552 /* Sources */,
 				A022431D2C33FA2600FC3552 /* Frameworks */,
 				A022431E2C33FA2600FC3552 /* Resources */,
+				A0DE66AE2C3684FF00DF5610 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-final class ListViewController: UIViewController {
+final class ListViewController: BaseViewController {
     
     let listTitleLabel = {
         let view = UILabel()
@@ -36,6 +36,7 @@ final class ListViewController: UIViewController {
     
     var list: Results<Todo>! {
         didSet {
+            print("didset")
             if list.count == 0 {
                 noneListLabel.isHidden = false
                 tableView.isHidden = true
@@ -56,19 +57,20 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        list = realm.objects(Todo.self)
+        print(#function)
+        listCountCondition()
         print(realm.configuration.fileURL)
-        configureHierarchy()
-        configureLayout()
-        configureView()
+       
     }
     
-    func configureHierarchy() {
+    override func configureHierarchy() {
+        print(#function)
         view.addSubview(listTitleLabel)
         view.addSubview(tableView)
         view.addSubview(noneListLabel)
     }
-    func configureLayout() {
+    override func configureLayout() {
+        print(#function)
         listTitleLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(40)
@@ -82,7 +84,8 @@ final class ListViewController: UIViewController {
         }
         
     }
-    func configureView() {
+    override func configureView() {
+        print(#function)
         view.backgroundColor = .systemBackground
         listTitleLabel.text = "전체"
         tableView.backgroundColor = .systemBackground
@@ -91,6 +94,10 @@ final class ListViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarItem
         navigationItem.rightBarButtonItem = rightBarItem
        
+       
+    }
+    func listCountCondition() {
+        list = realm.objects(Todo.self)
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
