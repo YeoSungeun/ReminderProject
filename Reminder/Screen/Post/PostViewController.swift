@@ -9,8 +9,9 @@ import UIKit
 import RealmSwift
 
 final class PostViewController: BaseViewController {
-    let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonClicked))
-    let addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonClicked))
+    // MARK: lazy로 하면 되는듯
+    lazy var cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonClicked))
+    lazy var addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonClicked))
     
     lazy var titleTextField = {
         let view = UITextField()
