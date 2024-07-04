@@ -28,6 +28,9 @@
 		A02243672C357B6600FC3552 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243662C357B6600FC3552 /* TagViewController.swift */; };
 		A02243692C357B7300FC3552 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243682C357B7300FC3552 /* PriorityViewController.swift */; };
 		A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */; };
+		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
+		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
+		A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +54,9 @@
 		A02243602C35594500FC3552 /* DuedateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DuedateViewController.swift; path = ../Post/DuedateViewController.swift; sourceTree = "<group>"; };
 		A02243662C357B6600FC3552 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
 		A02243682C357B7300FC3552 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
+		A0A8E4542C3621D700DF551D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,7 @@
 		A02243372C33FB8C00FC3552 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				A0A8E4532C3621CC00DF551D /* Main */,
 				A02243652C357B3300FC3552 /* Priority */,
 				A02243642C357B2700FC3552 /* Tag */,
 				A02243632C357AF600FC3552 /* DueDate */,
@@ -151,6 +158,7 @@
 			children = (
 				A02243432C33FD5400FC3552 /* BaseViewController.swift */,
 				A02243452C33FD6A00FC3552 /* BaseTableVeiwCell.swift */,
+				A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -203,6 +211,15 @@
 				A02243682C357B7300FC3552 /* PriorityViewController.swift */,
 			);
 			path = Priority;
+			sourceTree = "<group>";
+		};
+		A0A8E4532C3621CC00DF551D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A0A8E4542C3621D700DF551D /* MainViewController.swift */,
+				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,10 +308,13 @@
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,
 				A02243242C33FA2600FC3552 /* AppDelegate.swift in Sources */,
 				A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */,
+				A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */,
 				A02243612C35594500FC3552 /* DuedateViewController.swift in Sources */,
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
+				A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
+				A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */,
 				A022433D2C33FBFC00FC3552 /* PostViewController.swift in Sources */,
 				A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */,
 				A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */,
