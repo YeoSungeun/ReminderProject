@@ -38,7 +38,8 @@ class DuedateViewController: BaseViewController {
         print(#function)
         print(sender.date)
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy.MM.dd"  // 변환할 형식
+        dateformatter.locale = Locale(identifier: "ko")
+        dateformatter.dateFormat = "yyyy.MM.dd (EE)"  // 변환할 형식
         let dateString = dateformatter.string(from: sender.date)
         date = dateString
     }

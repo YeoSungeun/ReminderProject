@@ -46,8 +46,7 @@ final class ListViewController: BaseViewController {
             }
         }
     }
-    
-    let realm = try! Realm()
+    let repository = TodoRepository()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
@@ -59,8 +58,7 @@ final class ListViewController: BaseViewController {
         super.viewDidLoad()
         print(#function)
         listCountCondition()
-        print(realm.configuration.fileURL)
-       
+        repository.checkVersion()
     }
     
     override func configureHierarchy() {
@@ -94,10 +92,10 @@ final class ListViewController: BaseViewController {
         navigationItem.leftBarButtonItem = leftBarItem
         navigationItem.rightBarButtonItem = rightBarItem
        
-       
     }
     func listCountCondition() {
-        list = realm.objects(Todo.self)
+        print(#function)
+        list = repository.fetchAll()
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
@@ -133,15 +131,15 @@ final class ListViewController: BaseViewController {
         
         // 2. 버튼 만들기
         let basic = UIAlertAction(title: "기본", style: .default) { _ in
-            self.list = self.realm.objects(Todo.self)
+            self.list = self.repository.fetchAll()
             self.tableView.reloadData()
         }
         let dueDate = UIAlertAction(title: "마감일", style: .default) { _ in
-            self.list = self.realm.objects(Todo.self).sorted(byKeyPath: "duedate", ascending: true)
+            self.list = self.repository.fetchAll().sorted(byKeyPath: "duedate", ascending: true)
             self.tableView.reloadData()
         }
         let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-            self.list = self.realm.objects(Todo.self).where{
+            self.list = self.repository.fetchAll().where{
                 $0.priority == .upper
             }
             self.tableView.reloadData()
@@ -201,12 +199,13 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         //        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: nil) { action, view, completionHandler in
-            let data = self.realm.object(ofType: Todo.self, forPrimaryKey: self.list[indexPath.row].id)!
-            try! self.realm.write {
-                self.realm.delete(self.list[indexPath.row])
-            }
+            let id = self.list[indexPath.row].id
+            guard let data = self.repository.fetchData(id: id) else { return }
+            self.repository.deleteItem(data)
+            
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")

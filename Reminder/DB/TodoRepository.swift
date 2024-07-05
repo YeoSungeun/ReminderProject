@@ -1,0 +1,50 @@
+//
+//  TodoRepository.swift
+//  Reminder
+//
+//  Created by 여성은 on 7/5/24.
+//
+
+import UIKit
+import RealmSwift
+
+final class TodoRepository {
+    private let realm = try! Realm()
+    
+    func createItem(_ data: Todo) {
+        try! realm.write {
+            realm.add(data)
+        }
+    }
+    
+    func updateItem(value: [String: Any]) {
+        try! realm.write {
+            realm.create(Todo.self, value: value, update: .modified)
+        }
+    }
+    func updateItems(table: Results<Todo>!, value: Any?, forKey: String) {
+        try! realm.write {
+            table.setValue(value, forKey: forKey)
+        }
+    }
+    
+    func deleteItem(_ data: Todo) {
+        try! realm.write {
+            realm.delete(data)
+        }
+    }
+    
+    func fetchAll() -> Results<Todo>! {
+        let value = realm.objects(Todo.self)
+        return value
+    }
+    func fetchData(id: ObjectId) -> Todo? {
+        guard let value = realm.object(ofType: Todo.self, forPrimaryKey: id) else { return nil }
+        return value
+    }
+   
+    func checkVersion() {
+        print(try! Realm().configuration.fileURL)
+    }
+    
+}

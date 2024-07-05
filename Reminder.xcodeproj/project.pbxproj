@@ -31,6 +31,7 @@
 		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
 		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
 		A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */; };
+		A0B9F7242C37B8250050454B /* TodoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7232C37B8250050454B /* TodoRepository.swift */; };
 		A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		A0A8E4542C3621D700DF551D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		A0B9F7232C37B8250050454B /* TodoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				A02243582C34AE1300FC3552 /* RealmModel.swift */,
+				A0B9F7232C37B8250050454B /* TodoRepository.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
+				A0B9F7242C37B8250050454B /* TodoRepository.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
 				A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */,
 				A022433D2C33FBFC00FC3552 /* PostViewController.swift in Sources */,

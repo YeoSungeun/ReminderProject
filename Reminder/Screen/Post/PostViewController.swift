@@ -41,6 +41,8 @@ final class PostViewController: BaseViewController {
     var tag: String?
     var priorityType: Priority = .none
     
+    let repository = TodoRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -161,7 +163,6 @@ final class PostViewController: BaseViewController {
     
     @objc func addButtonClicked() {
         print(#function)
-        let realm = try! Realm()
 //        guard let title = titleTextField.text, !title.isEmpty else {
 //            showAlert(title: "제목을 입력해 주세요", message: "", ok: "확인") {
 //                print("alert")
@@ -174,10 +175,7 @@ final class PostViewController: BaseViewController {
         let tag = tag
         let priority = priorityType
         let data = Todo(title: title, memo: memo, duedate: duedate, tag: tag, priority: priority)
-        try! realm.write {
-            realm.add(data)
-            print("Realm Create Succeed")
-        }
+        repository.createItem(data)
         dismiss(animated: true)
     }
 
