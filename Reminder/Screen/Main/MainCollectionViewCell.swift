@@ -7,6 +7,14 @@
 
 import UIKit
 
-class MainCollectionViewCell: UICollectionViewCell {
-    
+class MainCollectionViewCell: BaseCollectionViewCell {
+    override func configureView() {
+        contentView.backgroundColor = .red
+    }
 }
+#if DEBUG
+@available (iOS 17, *)
+#Preview {
+    MainCollectionViewCell()
+}
+#endif
