@@ -10,7 +10,6 @@ import SnapKit
 import RealmSwift
 
 final class ListViewController: BaseViewController {
-    
     let listTitleLabel = {
         let view = UILabel()
         view.textColor = .systemBlue
@@ -85,40 +84,39 @@ final class ListViewController: BaseViewController {
     override func configureView() {
         print(#function)
         view.backgroundColor = .systemBackground
-        listTitleLabel.text = "전체"
         tableView.backgroundColor = .systemBackground
-        let leftBarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(leftBarButtonItemClicked))
+        let backButton = UIBarButtonItem(title: "목록", image: UIImage(systemName: "chevron.left"), target: self, action: #selector(backButtonClicked))
+        
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
-        navigationItem.leftBarButtonItem = leftBarItem
+        navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = rightBarItem
        
     }
     func listCountCondition() {
         print(#function)
-        list = repository.fetchAll()
+//        list = repository.fetchAll()
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
         }
     }
-    @objc func leftBarButtonItemClicked() {
+    @objc func backButtonClicked() {
         print(#function)
-        let vc = PostViewController()
-        let nav = UINavigationController(rootViewController: vc)
-        vc.reloadTableView = {
-            self.tableView.reloadData()
-        }
-        present(nav, animated: true)
+        navigationController?.popViewController(animated: true)
     }
     @objc func rightBarButtonItemClicked() {
         print(#function)
         showSortActionSheet()
     }
     @objc func radioButtonClicked(sender: UIButton) {
-        if list[sender.tag].isDone{
+        let data = list[sender.tag]
+        if data.isDone{
             //update관련
+            repository.updateItem(value: ["id": data.id,
+                                          "isDone": false])
         } else {
-            
+            repository.updateItem(value: ["id": data.id,
+                                          "isDone": true])
         }
         tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
     }
@@ -174,7 +172,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.priorityLabel.text = nil
         }
         cell.memoLabel.text = data.memo
-        cell.dueDateLabel.text = data.duedate
+        cell.dueDateLabel.text = data.duedate?.dateToString()
         if let tag = data.tag {
             cell.tagLabel.text = "#" + data.tag!
         }
@@ -206,6 +204,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             guard let data = self.repository.fetchData(id: id) else { return }
             self.repository.deleteItem(data)
             
+            self.list = self.repository.fetchAll()
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")

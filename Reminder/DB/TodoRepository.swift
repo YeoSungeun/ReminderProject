@@ -11,6 +11,12 @@ import RealmSwift
 final class TodoRepository {
     private let realm = try! Realm()
     
+    func getFileURL() {
+        guard let fileURL = realm.configuration.fileURL else { return }
+        print(fileURL)
+    }
+    
+    
     func createItem(_ data: Todo) {
         try! realm.write {
             realm.add(data)

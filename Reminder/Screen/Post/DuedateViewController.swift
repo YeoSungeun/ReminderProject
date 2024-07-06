@@ -9,8 +9,8 @@ import UIKit
 
 class DuedateViewController: BaseViewController {
     let datePicker = UIDatePicker()
-    var getDate: ((String) -> Void)?
-    var date = ""
+    var getDate: ((Date) -> Void)?
+    var date: Date?
     
     override func configureHierarchy() {
         view.addSubview(datePicker)
@@ -37,16 +37,12 @@ class DuedateViewController: BaseViewController {
     @objc func pickDate(sender: UIDatePicker){
         print(#function)
         print(sender.date)
-        let dateformatter = DateFormatter()
-        dateformatter.locale = Locale(identifier: "ko")
-        dateformatter.dateFormat = "yyyy.MM.dd (EE)"  // 변환할 형식
-        let dateString = dateformatter.string(from: sender.date)
-        date = dateString
+        date = sender.date
     }
     @objc func backButtonClicked() {
         print(#function)
         print(date)
-        getDate?(date)
+        getDate?(date ?? Date())
         navigationController?.popViewController(animated: true)
     }
     

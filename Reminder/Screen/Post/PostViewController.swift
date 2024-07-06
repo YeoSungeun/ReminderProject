@@ -37,9 +37,10 @@ final class PostViewController: BaseViewController {
     let priorityLabel = PostItemButtonView(title: "우선 순위")
     let addImageLabel = PostItemButtonView(title: "이미지 추가")
 
-    var reloadTableView: (() -> Void)?
+//    var reloadTableView: (() -> Void)?
     var tag: String?
     var priorityType: Priority = .none
+    var dueDate: Date?
     
     let repository = TodoRepository()
     
@@ -48,7 +49,7 @@ final class PostViewController: BaseViewController {
 
     }
     override func viewWillDisappear(_ animated: Bool) {
-        reloadTableView?()
+//        reloadTableView?()
     }
     override func configureHierarchy() {
         view.addSubview(contentsView)
@@ -123,7 +124,8 @@ final class PostViewController: BaseViewController {
         let vc = DuedateViewController()
         vc.getDate = { date in
             print(date)
-            self.dueDateLabel.detailLabel.text = date
+            self.dueDate = date
+            self.dueDateLabel.detailLabel.text = date.dateToString()
         }
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -171,7 +173,7 @@ final class PostViewController: BaseViewController {
 //        }
         let title = titleTextField.text ?? ""
         let memo = memoTextView.text ?? nil
-        let duedate = dueDateLabel.detailLabel.text ?? nil
+        let duedate = dueDate ?? nil
         let tag = tag
         let priority = priorityType
         let data = Todo(title: title, memo: memo, duedate: duedate, tag: tag, priority: priority)
