@@ -36,6 +36,7 @@
 		A0B9F7292C37D65B0050454B /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7282C37D65B0050454B /* AddView.swift */; };
 		A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72A2C37D67A0050454B /* BaseView.swift */; };
 		A0B9F72D2C390CF80050454B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72C2C390CF80050454B /* Date+Extension.swift */; };
+		A0B9F7302C39A3CE0050454B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A0B9F72F2C39A3CE0050454B /* FSCalendar */; };
 		A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A022434F2C3402BB00FC3552 /* RealmSwift in Frameworks */,
+				A0B9F7302C39A3CE0050454B /* FSCalendar in Frameworks */,
 				A02243542C34176100FC3552 /* SnapKit in Frameworks */,
 				A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */,
 			);
@@ -281,6 +283,7 @@
 				A022434E2C3402BB00FC3552 /* RealmSwift */,
 				A02243532C34176100FC3552 /* SnapKit */,
 				A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */,
+				A0B9F72F2C39A3CE0050454B /* FSCalendar */,
 			);
 			productName = Reminder;
 			productReference = A02243202C33FA2600FC3552 /* Reminder.app */;
@@ -314,6 +317,7 @@
 				A022434D2C3402BB00FC3552 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				A02243522C34176100FC3552 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A022436A2C359DE100FC3552 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				A0B9F72E2C39A3CE0050454B /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = A02243212C33FA2600FC3552 /* Products */;
 			projectDirPath = "";
@@ -613,6 +617,14 @@
 				minimumVersion = 7.0.3;
 			};
 		};
+		A0B9F72E2C39A3CE0050454B /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -630,6 +642,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A022436A2C359DE100FC3552 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		A0B9F72F2C39A3CE0050454B /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0B9F72E2C39A3CE0050454B /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import FSCalendar
 
 class MainViewController: BaseViewController {
     
@@ -91,6 +92,13 @@ class MainViewController: BaseViewController {
         layout.itemSize = CGSize(width: width/2, height: width/4)
         return layout
     }
+    
+    var calendar = FSCalendar()
+    let start = Calendar.current.startOfDay(for: Date())
+    lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
+    lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
+                                     start as NSDate, end as NSDate)
+    
 
 }
 
@@ -114,8 +122,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch category[indexPath.row] {
         case .today:
             vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList
-            // TODO: Calender 날짜 오늘 비교하기!
+            vc.list = todoList.filter(predicate)
         case .upComing:
             vc.listTitleLabel.text = category[indexPath.row].rawValue
             vc.list = todoList.where {
@@ -136,4 +143,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         navigationController?.pushViewController(vc, animated: true)
     }
     
+  
+    
+    
 }
+
+
