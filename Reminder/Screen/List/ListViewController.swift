@@ -186,7 +186,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.radioButton.setImage( image, for: .normal)
             cell.titleLabel.textColor = .black
         }
-        //        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
+       cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         
         return cell
     }
