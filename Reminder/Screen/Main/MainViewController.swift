@@ -12,7 +12,7 @@ import FSCalendar
 class MainViewController: BaseViewController {
     
     let category = TodoCategory.allCases
-    var todoList: Results<Todo>!
+    var todoList: Results<Todo>! 
     let repository = TodoRepository()
 
     lazy var searchBar = {
@@ -31,6 +31,9 @@ class MainViewController: BaseViewController {
     lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
     lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
                                      start as NSDate, end as NSDate)
+    override func viewWillAppear(_ animated: Bool) {
+        mainCollectionView.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +97,7 @@ class MainViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         layout.minimumLineSpacing = 20
         layout.minimumInteritemSpacing = 20
-        layout.itemSize = CGSize(width: width/2, height: width/4)
+        layout.itemSize = CGSize(width: width/2, height: (width/2) * 0.55)
         return layout
     }
 }
@@ -109,34 +112,21 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(#function)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.id, for: indexPath)
+        print(#function,indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.id, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell()}
+        let categoryType = category[indexPath.item]
+        cell.categoryImageView.image = categoryType.image
+        cell.categoryImageView.tintColor = categoryType.backgroundColor
+        cell.categoryTitle.text = categoryType.rawValue
+        cell.countLabel.text = "\(categoryType.getfilteredList(list: todoList).count)"
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function,"\(indexPath)")
         let vc = ListViewController()
-        switch category[indexPath.row] {
-        case .today:
-            vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList.filter(predicate)
-        case .upComing:
-            vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList.where {
-                $0.isDone == false
-            }
-        case .all:
-            vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList
-        case .flag:
-            vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList
-        case .done:
-            vc.listTitleLabel.text = category[indexPath.row].rawValue
-            vc.list = todoList.where {
-                $0.isDone == true
-            }
-        }
+        let category = category[indexPath.row]
+        vc.listTitleLabel.text = category.rawValue
+        vc.list = category.getfilteredList(list: todoList)
         navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -118,7 +118,7 @@ final class ListViewController: BaseViewController {
             repository.updateItem(value: ["id": data.id,
                                           "isDone": true])
         }
-        tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
+        tableView.reloadData()
     }
     // TODO: pull down button으로 변경하기 _ 정렬 기준 보완하기
     func showSortActionSheet() {
