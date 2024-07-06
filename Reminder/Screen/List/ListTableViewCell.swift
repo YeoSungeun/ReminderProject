@@ -23,6 +23,7 @@ class ListTableViewCell: BaseTableVeiwCell {
     let titleLabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 16)
+        view.numberOfLines = 1
         return view
     }()
     let memoLabel = {
@@ -65,6 +66,7 @@ class ListTableViewCell: BaseTableVeiwCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(12)
             make.leading.equalTo(priorityLabel.snp.trailing).offset(4)
+            make.width.equalTo(contentView.safeAreaLayoutGuide).inset(50)
         }
         memoLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)

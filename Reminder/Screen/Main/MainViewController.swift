@@ -27,6 +27,11 @@ class MainViewController: BaseViewController {
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     let addView = AddView()
     
+    let start = Calendar.current.startOfDay(for: Date())
+    lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
+    lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
+                                     start as NSDate, end as NSDate)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
@@ -92,14 +97,6 @@ class MainViewController: BaseViewController {
         layout.itemSize = CGSize(width: width/2, height: width/4)
         return layout
     }
-    
-    var calendar = FSCalendar()
-    let start = Calendar.current.startOfDay(for: Date())
-    lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
-    lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
-                                     start as NSDate, end as NSDate)
-    
-
 }
 
 extension MainViewController: UISearchBarDelegate {

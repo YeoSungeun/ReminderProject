@@ -19,9 +19,13 @@ final class PostViewController: BaseViewController {
         view.delegate = self
         return view
     }() 
-    let memoTextView = {
+    let textViewPlaceholder = "메모를 입력하세요."
+    lazy var memoTextView = {
         let view = UITextView()
-        view.text = "메모"
+        view.text = textViewPlaceholder
+        view.font = .systemFont(ofSize: 16)
+        view.textColor = .systemGray3
+        view.delegate = self
         return view
     }()
     let divider = UIView()
@@ -79,7 +83,7 @@ final class PostViewController: BaseViewController {
         }
         memoTextView.snp.makeConstraints { make in
             make.top.equalTo(divider.snp.bottom).offset(4)
-            make.horizontalEdges.bottom.equalTo(contentsView.safeAreaLayoutGuide).inset(20)
+            make.horizontalEdges.bottom.equalTo(contentsView.safeAreaLayoutGuide).inset(12)
         }
         dueDateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentsView.snp.bottom).offset(16)
@@ -191,4 +195,19 @@ extension PostViewController: UITextFieldDelegate {
         }
         self.addButton.isEnabled = true
     }
+}
+extension PostViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceholder && textView.textColor == .systemGray3 {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceholder
+            textView.textColor = .systemGray3
+        }
+    }
+
 }
