@@ -129,10 +129,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         vc.list = category.getfilteredList(list: todoList)
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-  
-    
-    
+
 }
 
 

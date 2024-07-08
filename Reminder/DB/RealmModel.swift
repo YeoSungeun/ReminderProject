@@ -16,6 +16,11 @@ enum Priority: String, CaseIterable, PersistableEnum {
     case lower = "낮음"
     case none = "설정 안함"
 }
+class Folder: Object {
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var name: String
+    @Persisted var detail: List<Todo>
+}
 
 class Todo: Object {
     @Persisted(primaryKey: true) var id: ObjectId

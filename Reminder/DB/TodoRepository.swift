@@ -18,11 +18,18 @@ final class TodoRepository {
     
     
     func createItem(_ data: Todo) {
-        try! realm.write {
-            realm.add(data)
+        let folder = realm.objects(Folder.self).where {
+            $0.name == "다이어트"
+        }
+        do {
+            try realm.write {
+                folder.first?.detail.append(data)
+            }
+        } catch {
+            print("Realm Error")
         }
     }
-    
+   
     func updateItem(value: [String: Any]) {
         try! realm.write {
             realm.create(Todo.self, value: value, update: .modified)
@@ -38,6 +45,11 @@ final class TodoRepository {
         try! realm.write {
             realm.delete(data)
         }
+    }
+    
+    func fetchFolder() -> Results<Folder> {
+        let value = realm.objects(Folder.self)
+        return value
     }
     
     func fetchAll() -> Results<Todo>! {
