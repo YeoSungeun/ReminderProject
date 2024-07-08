@@ -14,6 +14,7 @@ class MainViewController: BaseViewController {
     let category = TodoCategory.allCases
     var todoList: Results<Todo>! 
     let repository = TodoRepository()
+    var folderList: Results<Folder>!
 
     lazy var searchBar = {
        let view = UISearchBar()
@@ -25,6 +26,14 @@ class MainViewController: BaseViewController {
         return view
     }()
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+    lazy var folderTableVeiw = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.register(FolderTableViewCell.self, forCellReuseIdentifier: FolderTableViewCell.id)
+        view.backgroundColor = .secondarySystemBackground
+        return view
+    }()
     let addView = AddView()
     
     let start = Calendar.current.startOfDay(for: Date())
@@ -33,12 +42,15 @@ class MainViewController: BaseViewController {
                                      start as NSDate, end as NSDate)
     override func viewWillAppear(_ animated: Bool) {
         mainCollectionView.reloadData()
+        folderTableVeiw.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
         todoList = repository.fetchAll()
+        folderList = repository.fetchFolder()
+        print(folderList)
         repository.getFileURL()
         
     }
@@ -48,6 +60,7 @@ class MainViewController: BaseViewController {
         view.addSubview(searchBar)
         view.addSubview(mainCollectionView)
         view.addSubview(addView)
+        view.addSubview(folderTableVeiw)
     }
     override func configureLayout() {
         print(#function)
@@ -65,8 +78,13 @@ class MainViewController: BaseViewController {
         mainCollectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(addView.snp.top)
+            make.height.equalTo(300)
         
+        }
+        folderTableVeiw.snp.makeConstraints { make in
+            make.top.equalTo(mainCollectionView.snp.bottom).offset(8)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(addView.snp.top)
         }
         
         
@@ -132,4 +150,23 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 }
 
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return folderList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
+        cell.titleLabel.text = folderList[indexPath.row].name
+        cell.countLabel.text = "(\(folderList[indexPath.row].detail.count))"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = FolderedListViewController()
+        vc.folder = folderList[indexPath.row]
+        vc.listTitleLabel.text = folderList[indexPath.row].name
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
 

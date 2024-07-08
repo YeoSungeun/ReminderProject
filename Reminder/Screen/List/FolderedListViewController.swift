@@ -1,8 +1,8 @@
 //
-//  ListViewController.swift
+//  FolderedListViewController.swift
 //  Reminder
 //
-//  Created by 여성은 on 7/2/24.
+//  Created by 여성은 on 7/9/24.
 //
 
 import UIKit
@@ -10,8 +10,9 @@ import SnapKit
 import RealmSwift
 
 
-final class ListViewController: BaseViewController {
+final class FolderedListViewController: BaseViewController {
    
+    var folder: Folder?
     
     let listTitleLabel = {
         let view = UILabel()
@@ -36,7 +37,7 @@ final class ListViewController: BaseViewController {
         return view
     }()
     
-    var list: Results<Todo>! {
+    var list: [Todo] = [] {
         didSet {
             print("didset")
             if list.count == 0 {
@@ -59,7 +60,11 @@ final class ListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
-        
+        if let folder = folder {
+            let value = folder.detail
+            let result = Array(value)
+            list = result
+        }
         listCountCondition()
         repository.checkVersion()
         
@@ -134,17 +139,17 @@ final class ListViewController: BaseViewController {
         
         // 2. 버튼 만들기
         let basic = UIAlertAction(title: "기본", style: .default) { _ in
-            self.list = self.repository.fetchAll()
+            self.list = Array(self.repository.fetchAll())
             self.tableView.reloadData()
         }
         let dueDate = UIAlertAction(title: "마감일", style: .default) { _ in
-            self.list = self.repository.fetchAll().sorted(byKeyPath: "duedate", ascending: true)
+            self.list = Array(self.repository.fetchAll().sorted(byKeyPath: "duedate", ascending: true))
             self.tableView.reloadData()
         }
         let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-            self.list = self.repository.fetchAll().where{
+            self.list = Array(self.repository.fetchAll().where{
                 $0.priority == .upper
-            }
+            })
             self.tableView.reloadData()
         }
 
@@ -157,7 +162,7 @@ final class ListViewController: BaseViewController {
     
 }
 
-extension ListViewController: UITableViewDelegate, UITableViewDataSource {
+extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
@@ -209,7 +214,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             guard let data = self.repository.fetchData(id: id) else { return }
             self.repository.deleteItem(data)
             
-            self.list = self.repository.fetchAll()
+            self.list = Array(self.repository.fetchAll())
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")
@@ -218,3 +223,4 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+

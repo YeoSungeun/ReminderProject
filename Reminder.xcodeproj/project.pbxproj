@@ -37,6 +37,8 @@
 		A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72A2C37D67A0050454B /* BaseView.swift */; };
 		A0B9F72D2C390CF80050454B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72C2C390CF80050454B /* Date+Extension.swift */; };
 		A0B9F7302C39A3CE0050454B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A0B9F72F2C39A3CE0050454B /* FSCalendar */; };
+		A0B9F7412C3C99F80050454B /* FolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */; };
+		A0B9F7432C3C9FB80050454B /* FolderedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */; };
 		A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -83,6 +85,8 @@
 		A0B9F7282C37D65B0050454B /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		A0B9F72A2C37D67A0050454B /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		A0B9F72C2C390CF80050454B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTableViewCell.swift; sourceTree = "<group>"; };
+		A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderedListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,7 @@
 			children = (
 				A022433A2C33FBF600FC3552 /* ListViewController.swift */,
 				A02243502C3414CF00FC3552 /* ListTableViewCell.swift */,
+				A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				A0A8E4542C3621D700DF551D /* MainViewController.swift */,
 				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
 				A0B9F7282C37D65B0050454B /* AddView.swift */,
+				A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -357,12 +363,14 @@
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */,
 				A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */,
+				A0B9F7412C3C99F80050454B /* FolderTableViewCell.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A0B9F7242C37B8250050454B /* TodoRepository.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
 				A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */,
 				A022433D2C33FBFC00FC3552 /* PostViewController.swift in Sources */,
 				A0B9F7292C37D65B0050454B /* AddView.swift in Sources */,
+				A0B9F7432C3C9FB80050454B /* FolderedListViewController.swift in Sources */,
 				A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */,
 				A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */,
 				A02243512C3414CF00FC3552 /* ListTableViewCell.swift in Sources */,
