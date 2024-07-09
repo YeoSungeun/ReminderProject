@@ -28,6 +28,8 @@
 		A02243672C357B6600FC3552 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243662C357B6600FC3552 /* TagViewController.swift */; };
 		A02243692C357B7300FC3552 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243682C357B7300FC3552 /* PriorityViewController.swift */; };
 		A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */; };
+		A09650202C3DE9F900D3841F /* DuedateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */; };
+		A09650222C3DEA0B00D3841F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650212C3DEA0B00D3841F /* Observable.swift */; };
 		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
 		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
 		A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */; };
@@ -77,6 +79,8 @@
 		A02243602C35594500FC3552 /* DuedateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DuedateViewController.swift; path = ../Post/DuedateViewController.swift; sourceTree = "<group>"; };
 		A02243662C357B6600FC3552 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
 		A02243682C357B7300FC3552 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
+		A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuedateViewModel.swift; sourceTree = "<group>"; };
+		A09650212C3DEA0B00D3841F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		A0A8E4542C3621D700DF551D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 				A022434C2C3401A000FC3552 /* Resource */,
 				A022433F2C33FC0D00FC3552 /* Global */,
 				A022433E2C33FC0200FC3552 /* DB */,
+				A096501E2C3DE7FF00D3841F /* ViewModel */,
 				A02243372C33FB8C00FC3552 /* Screen */,
 				A02243232C33FA2600FC3552 /* AppDelegate.swift */,
 				A02243252C33FA2600FC3552 /* SceneDelegate.swift */,
@@ -249,6 +254,15 @@
 			path = Priority;
 			sourceTree = "<group>";
 		};
+		A096501E2C3DE7FF00D3841F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A09650212C3DEA0B00D3841F /* Observable.swift */,
+				A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		A0A8E4532C3621CC00DF551D /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +369,7 @@
 				A022434B2C34003C00FC3552 /* UIViewController+Extension.swift in Sources */,
 				A02243592C34AE1300FC3552 /* RealmModel.swift in Sources */,
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,
+				A09650202C3DE9F900D3841F /* DuedateViewModel.swift in Sources */,
 				A02243242C33FA2600FC3552 /* AppDelegate.swift in Sources */,
 				A02243572C344EF600FC3552 /* PostItemButtonView.swift in Sources */,
 				A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */,
@@ -364,6 +379,7 @@
 				A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */,
 				A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */,
 				A0B9F7412C3C99F80050454B /* FolderTableViewCell.swift in Sources */,
+				A09650222C3DEA0B00D3841F /* Observable.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A0B9F7242C37B8250050454B /* TodoRepository.swift in Sources */,
 				A02243482C33FD8100FC3552 /* Reusable.swift in Sources */,
