@@ -15,6 +15,19 @@ enum Priority: String, CaseIterable, PersistableEnum {
     case middle = "보통"
     case lower = "낮음"
     case none = "설정 안함"
+    
+    var color: UIColor {
+        switch self {
+        case .upper:
+                .red
+        case .middle:
+                .yellow
+        case .lower:
+                .green
+        case .none:
+                .lightGray
+        }
+    }
 }
 class Folder: Object {
     @Persisted(primaryKey: true) var id: ObjectId

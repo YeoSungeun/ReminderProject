@@ -10,7 +10,6 @@ import UIKit
 class DuedateViewController: BaseViewController {
     let datePicker = UIDatePicker()
     var getDate: ((Date) -> Void)?
-    var date: Date?
     
     let dateLabel = {
         let view = UILabel()
