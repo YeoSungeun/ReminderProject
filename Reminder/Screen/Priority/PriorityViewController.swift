@@ -31,7 +31,7 @@ final class PriorityViewController: BaseViewController {
         
         return view
     }()
-    var getPriority: ((Priority) -> Void)?
+//    var getPriority: ((Priority) -> Void)?
     
     let viewModel = PriorityViewModel()
     
@@ -60,7 +60,9 @@ final class PriorityViewController: BaseViewController {
     }
     @objc func backButtonClicked() {
         print(#function)
-        getPriority?(viewModel.outputPriority.value)
+        viewModel.inputBackButtonClicked.value = ()
+        
+        viewModel.fetchPriority?(viewModel.outputPriority.value)
         navigationController?.popViewController(animated: true)
     }
     

@@ -7,13 +7,26 @@
 
 import Foundation
 
-class PriorityViewModel {
+final class PriorityViewModel {
     var inputPriority = Observable(3)
     var outputPriority = Observable(Priority.none)
+    
+    var inputBackButtonClicked: Observable<Void?> = Observable(nil)
+    
+    var inputClosure: Observable<((Priority) -> Void)?> = Observable(nil)
+ 
+    
+    var fetchPriority:  ((Priority) -> Void)?
     
     init() {
         inputPriority.bind { _ in
             self.getPriority()
+        }
+//        inputClosure.bind { value in
+//            value?(self.outputPriority.value)
+//        }
+        inputBackButtonClicked.bind { _ in
+            self.inputClosure.value?(self.outputPriority.value)
         }
     }
     

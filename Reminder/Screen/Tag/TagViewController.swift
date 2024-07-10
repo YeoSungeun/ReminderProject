@@ -24,6 +24,7 @@ final class TagViewController: BaseViewController {
         view.layer.cornerRadius = 10
         return view
     }()
+    
     var getTag: ((String) -> Void)?
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -18,7 +18,7 @@ final class PostViewController: BaseViewController {
         view.placeholder = "제목"
         view.delegate = self
         return view
-    }() 
+    }()
     let textViewPlaceholder = "메모를 입력하세요."
     lazy var memoTextView = {
         let view = UITextView()
@@ -40,7 +40,7 @@ final class PostViewController: BaseViewController {
     let tagLabel = PostItemButtonView(title: "태그")
     let priorityLabel = PostItemButtonView(title: "우선 순위")
     let addImageLabel = PostItemButtonView(title: "이미지 추가")
-
+    
     var reloadTableView: (() -> Void)?
     
     var tag: String?
@@ -51,7 +51,7 @@ final class PostViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         reloadTableView?()
@@ -116,7 +116,7 @@ final class PostViewController: BaseViewController {
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = addButton
         addButton.isEnabled = false
-
+        
         dueDateLabel.moreButton.addTarget(self, action: #selector(dueDateLabelClicked), for: .touchUpInside)
         tagLabel.moreButton.addTarget(self, action: #selector(tagLabelClicked), for: .touchUpInside)
         priorityLabel.moreButton.addTarget(self, action: #selector(priorityLabelClicked), for: .touchUpInside)
@@ -144,24 +144,40 @@ final class PostViewController: BaseViewController {
         }
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     @objc func priorityLabelClicked() {
         print(#function)
         let vc = PriorityViewController()
-        vc.getPriority = { priority in
-            print(priority)
+        //                vc.viewModel.fetchPriority = { priority in
+        //                    print(priority)
+        //                    self.priorityType = priority
+        //                    if priority != .none {
+        //                        self.priorityLabel.detailLabel.text = priority.rawValue
+        //                    }
+        //                }
+        
+        vc.viewModel.inputClosure.value = { priority in
             self.priorityType = priority
             if priority != .none {
                 self.priorityLabel.detailLabel.text = priority.rawValue
             }
         }
+        
+        //        vc.viewModel.outputPriority.bind { priority in
+        //            print(priority)
+        //            self.priorityType = priority
+        //            if priority != .none {
+        //                self.priorityLabel.detailLabel.text = priority.rawValue
+        //            }
+        //        }
+        //
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     @objc func addImageLabelClicked() {
         print(#function)
     }
-
+    
     
     @objc func cancelButtonClicked() {
         print(#function)
@@ -170,12 +186,12 @@ final class PostViewController: BaseViewController {
     
     @objc func addButtonClicked() {
         print(#function)
-//        guard let title = titleTextField.text, !title.isEmpty else {
-//            showAlert(title: "제목을 입력해 주세요", message: "", ok: "확인") {
-//                print("alert")
-//            }
-//            return
-//        }
+        //        guard let title = titleTextField.text, !title.isEmpty else {
+        //            showAlert(title: "제목을 입력해 주세요", message: "", ok: "확인") {
+        //                print("alert")
+        //            }
+        //            return
+        //        }
         
         let title = titleTextField.text ?? ""
         let memo: String?
@@ -191,7 +207,7 @@ final class PostViewController: BaseViewController {
         repository.createItem(data)
         dismiss(animated: true)
     }
-
+    
 }
 extension PostViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -216,5 +232,5 @@ extension PostViewController: UITextViewDelegate {
             textView.textColor = .systemGray3
         }
     }
-
+    
 }
