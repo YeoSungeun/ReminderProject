@@ -42,6 +42,7 @@ final class PostViewController: BaseViewController {
     let addImageLabel = PostItemButtonView(title: "이미지 추가")
 
     var reloadTableView: (() -> Void)?
+    
     var tag: String?
     var priorityType: Priority = .none
     var dueDate: Date?
@@ -175,8 +176,14 @@ final class PostViewController: BaseViewController {
 //            }
 //            return
 //        }
+        
         let title = titleTextField.text ?? ""
-        let memo = memoTextView.text ?? nil
+        let memo: String?
+        if memoTextView.text == textViewPlaceholder && memoTextView.textColor == .systemGray3 {
+            memo = nil
+        } else {
+            memo = memoTextView.text ?? nil
+        }
         let duedate = dueDate ?? nil
         let tag = tag
         let priority = priorityType

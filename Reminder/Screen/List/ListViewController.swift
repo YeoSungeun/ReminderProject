@@ -38,7 +38,7 @@ final class ListViewController: BaseViewController {
     
     var list: Results<Todo>! {
         didSet {
-            print("didset")
+            print("list didset")
             if list.count == 0 {
                 noneListLabel.isHidden = false
                 tableView.isHidden = true
@@ -103,6 +103,9 @@ final class ListViewController: BaseViewController {
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
+        } else {
+            noneListLabel.isHidden = true
+            tableView.isHidden = false
         }
     }
     @objc func backButtonClicked() {
@@ -180,6 +183,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.dueDateLabel.text = data.duedate?.dateToString()
         if let tag = data.tag {
             cell.tagLabel.text = "#" + data.tag!
+        } else {
+            cell.tagLabel.text = nil
         }
         cell.radioButton.tag = indexPath.row
         if data.isDone {
