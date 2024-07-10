@@ -41,6 +41,7 @@ class MainViewController: BaseViewController {
     lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
                                      start as NSDate, end as NSDate)
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         mainCollectionView.reloadData()
         folderTableVeiw.reloadData()
     }
@@ -103,9 +104,10 @@ class MainViewController: BaseViewController {
     @objc func addButtonClicked() {
         let vc = PostViewController()
         let nav = UINavigationController(rootViewController: vc)
-//        vc.reloadTableView = {
-//            self.tableView.reloadData()
-//        }
+        vc.reloadTableView = {
+            self.mainCollectionView.reloadData()
+            self.folderTableVeiw.reloadData()
+        }
         present(nav, animated: true)
     }
    

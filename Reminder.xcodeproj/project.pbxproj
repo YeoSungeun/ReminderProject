@@ -147,11 +147,11 @@
 			isa = PBXGroup;
 			children = (
 				A0A8E4532C3621CC00DF551D /* Main */,
+				A02243382C33FB9700FC3552 /* List */,
+				A02243392C33FBDC00FC3552 /* Post */,
 				A02243652C357B3300FC3552 /* Priority */,
 				A02243642C357B2700FC3552 /* Tag */,
 				A02243632C357AF600FC3552 /* DueDate */,
-				A02243392C33FBDC00FC3552 /* Post */,
-				A02243382C33FB9700FC3552 /* List */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
