@@ -25,11 +25,8 @@ final class TagViewController: BaseViewController {
         return view
     }()
     
-    var getTag: ((String) -> Void)?
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-    }
+//    var getTag: ((String) -> Void)?
+    let viewModel = TagViewModel()
     
     override func configureHierarchy() {
         view.addSubview(tagView)
@@ -52,13 +49,14 @@ final class TagViewController: BaseViewController {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonClicked))
         navigationItem.leftBarButtonItem = backButton
     }
+    
     @objc func backButtonClicked() {
         print(#function)
-        guard let tag = tagTextField.text, !tag.isEmpty else {
-            navigationController?.popViewController(animated: true)
-            return
-        }
-        getTag?(tag)
+        
+        viewModel.inputTag.value = tagTextField.text
+        viewModel.inputBackButtonClicked.value = ()
+        
+//        getTag?(tag)
         navigationController?.popViewController(animated: true)
     }
 }

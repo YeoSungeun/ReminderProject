@@ -62,7 +62,7 @@ final class PriorityViewController: BaseViewController {
         print(#function)
         viewModel.inputBackButtonClicked.value = ()
         
-        viewModel.fetchPriority?(viewModel.outputPriority.value)
+//        viewModel.fetchPriority?(viewModel.outputPriority.value)
         navigationController?.popViewController(animated: true)
     }
     

@@ -9,7 +9,7 @@ import UIKit
 
 class DuedateViewController: BaseViewController {
     let datePicker = UIDatePicker()
-    var getDate: ((Date) -> Void)?
+//    var getDate: ((Date) -> Void)?
     
     let dateLabel = {
         let view = UILabel()
@@ -62,7 +62,7 @@ class DuedateViewController: BaseViewController {
     }
     @objc func backButtonClicked() {
         print(#function)
-        getDate?(viewModel.outputDate.value ?? Date())
+//        getDate?(viewModel.outputDate.value ?? Date())
         navigationController?.popViewController(animated: true)
     }
     func bindData() {
