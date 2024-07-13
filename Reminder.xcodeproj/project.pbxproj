@@ -29,6 +29,7 @@
 		A02243692C357B7300FC3552 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02243682C357B7300FC3552 /* PriorityViewController.swift */; };
 		A022436C2C359DE100FC3552 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A022436B2C359DE100FC3552 /* IQKeyboardManagerSwift */; };
 		A0262ED42C3EA640001FAA74 /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0262ED32C3EA640001FAA74 /* TagViewModel.swift */; };
+		A0262ED62C3F4595001FAA74 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0262ED52C3F4595001FAA74 /* PostViewModel.swift */; };
 		A09650202C3DE9F900D3841F /* DuedateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */; };
 		A09650222C3DEA0B00D3841F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650212C3DEA0B00D3841F /* Observable.swift */; };
 		A09650242C3DF73600D3841F /* PriorityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650232C3DF73600D3841F /* PriorityViewModel.swift */; };
@@ -82,6 +83,7 @@
 		A02243662C357B6600FC3552 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
 		A02243682C357B7300FC3552 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
 		A0262ED32C3EA640001FAA74 /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
+		A0262ED52C3F4595001FAA74 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuedateViewModel.swift; sourceTree = "<group>"; };
 		A09650212C3DEA0B00D3841F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		A09650232C3DF73600D3841F /* PriorityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewModel.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */,
 				A09650232C3DF73600D3841F /* PriorityViewModel.swift */,
 				A0262ED32C3EA640001FAA74 /* TagViewModel.swift */,
+				A0262ED52C3F4595001FAA74 /* PostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0262ED62C3F4595001FAA74 /* PostViewModel.swift in Sources */,
 				A022434B2C34003C00FC3552 /* UIViewController+Extension.swift in Sources */,
 				A02243592C34AE1300FC3552 /* RealmModel.swift in Sources */,
 				A02243282C33FA2600FC3552 /* ViewController.swift in Sources */,

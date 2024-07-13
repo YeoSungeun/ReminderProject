@@ -11,7 +11,7 @@ import RealmSwift
 
 
 final class ListViewController: BaseViewController {
-   
+    
     
     let listTitleLabel = {
         let view = UILabel()
@@ -48,7 +48,10 @@ final class ListViewController: BaseViewController {
             }
         }
     }
+    
+    
     let repository = TodoRepository()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
@@ -95,11 +98,11 @@ final class ListViewController: BaseViewController {
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = rightBarItem
-       
+        
     }
     func listCountCondition() {
         print(#function)
-//        list = repository.fetchAll()
+        //        list = repository.fetchAll()
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
@@ -150,7 +153,7 @@ final class ListViewController: BaseViewController {
             }
             self.tableView.reloadData()
         }
-
+        
         alert.addAction(basic)
         alert.addAction(dueDate)
         alert.addAction(priority)
@@ -167,17 +170,18 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        //        cell.selectionStyle = .none
         let data = list[indexPath.row]
         cell.titleLabel.text = data.title
         switch data.priority {
-            case.upper:
-                cell.priorityLabel.text = "!!!"
-            case.middle:
-                cell.priorityLabel.text = "!!"
-            case.lower:
-                cell.priorityLabel.text = "!"
-            case .none:
-                cell.priorityLabel.text = nil
+        case.upper:
+            cell.priorityLabel.text = "!!!"
+        case.middle:
+            cell.priorityLabel.text = "!!"
+        case.lower:
+            cell.priorityLabel.text = "!"
+        case .none:
+            cell.priorityLabel.text = nil
         }
         cell.memoLabel.text = data.memo
         cell.dueDateLabel.text = data.duedate?.dateToString()
@@ -196,7 +200,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.radioButton.setImage( image, for: .normal)
             cell.titleLabel.textColor = .black
         }
-       cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
+        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         
         return cell
     }
@@ -205,9 +209,9 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: nil) { action, view, completionHandler in
             let id = self.list[indexPath.row].id

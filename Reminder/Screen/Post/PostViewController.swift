@@ -19,12 +19,11 @@ final class PostViewController: BaseViewController {
         view.delegate = self
         return view
     }()
-    let textViewPlaceholder = "메모를 입력하세요."
     lazy var memoTextView = {
         let view = UITextView()
-        view.text = textViewPlaceholder
-        view.font = .systemFont(ofSize: 16)
+        view.text = viewModel.textViewPlaceholder
         view.textColor = .systemGray3
+        view.font = .systemFont(ofSize: 16)
         view.delegate = self
         return view
     }()
@@ -43,14 +42,17 @@ final class PostViewController: BaseViewController {
     
     var reloadTableView: (() -> Void)?
     
-    var tag: String?
-    var priorityType: Priority = .none
-    var dueDate: Date?
+//    var tag: String?
+//    var priorityType: Priority = .none
+//    var dueDate: Date?
     
     let repository = TodoRepository()
+    let viewModel = PostViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindData()
+        
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,14 +124,13 @@ final class PostViewController: BaseViewController {
         priorityLabel.moreButton.addTarget(self, action: #selector(priorityLabelClicked), for: .touchUpInside)
         addImageLabel.moreButton.addTarget(self, action: #selector(addImageLabelClicked), for: .touchUpInside)
         
-        
     }
     @objc func dueDateLabelClicked() {
         print(#function)
         let vc = DuedateViewController()
-        vc.getDate = { date in
+        vc.viewModel.inputClosure.value = { date in
             print(date)
-            self.dueDate = date
+            self.viewModel.inputDuedate = date ?? nil
             self.dueDateLabel.detailLabel.text = date.dateToString()
         }
         navigationController?.pushViewController(vc, animated: true)
@@ -137,10 +138,10 @@ final class PostViewController: BaseViewController {
     @objc func tagLabelClicked() {
         print(#function)
         let vc = TagViewController()
-        vc.getTag = { data in
-            print(data)
-            self.tag = data
-            self.tagLabel.detailLabel.text = "#" + data
+        vc.viewModel.inputClosure.value = { tag in
+            print(tag)
+            self.viewModel.inputTag = tag ?? nil
+            self.tagLabel.detailLabel.text = "#" + tag
         }
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -155,11 +156,12 @@ final class PostViewController: BaseViewController {
         //                        self.priorityLabel.detailLabel.text = priority.rawValue
         //                    }
         //                }
-        
         vc.viewModel.inputClosure.value = { priority in
-            self.priorityType = priority
+            self.viewModel.inputPriority = priority
+            self.viewModel.inputPriority = priority
             if priority != .none {
                 self.priorityLabel.detailLabel.text = priority.rawValue
+                
             }
         }
         
@@ -186,49 +188,39 @@ final class PostViewController: BaseViewController {
     
     @objc func addButtonClicked() {
         print(#function)
-        //        guard let title = titleTextField.text, !title.isEmpty else {
-        //            showAlert(title: "제목을 입력해 주세요", message: "", ok: "확인") {
-        //                print("alert")
-        //            }
-        //            return
-        //        }
         
-        let title = titleTextField.text ?? ""
-        let memo: String?
-        if memoTextView.text == textViewPlaceholder && memoTextView.textColor == .systemGray3 {
-            memo = nil
+        if memoTextView.text == viewModel.textViewPlaceholder && memoTextView.textColor == .systemGray3 {
+            viewModel.inputMemo = nil
         } else {
-            memo = memoTextView.text ?? nil
+            viewModel.inputMemo = memoTextView.text ?? nil
         }
-        let duedate = dueDate ?? nil
-        let tag = tag
-        let priority = priorityType
-        let data = Todo(title: title, memo: memo, duedate: duedate, tag: tag, priority: priority)
-        repository.createItem(data)
+        viewModel.inputAddButtonClicked.value = ()
         dismiss(animated: true)
+    }
+    func bindData() {
+        viewModel.outputTitleValid.bind { value in
+            self.addButton.isEnabled = value
+        }
+        
     }
     
 }
 extension PostViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         print(#function)
-        guard let text = textField.text, !text.isEmpty else {
-            self.addButton.isEnabled = false
-            return
-        }
-        self.addButton.isEnabled = true
+        viewModel.inputTitle.value = textField.text
     }
 }
 extension PostViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceholder && textView.textColor == .systemGray3 {
+        if textView.text == viewModel.textViewPlaceholder && textView.textColor == .systemGray3 {
             textView.text = nil
             textView.textColor = .black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceholder
+            textView.text = viewModel.textViewPlaceholder
             textView.textColor = .systemGray3
         }
     }

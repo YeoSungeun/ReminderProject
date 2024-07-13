@@ -185,6 +185,8 @@ extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource
         cell.dueDateLabel.text = data.duedate?.dateToString()
         if let tag = data.tag {
             cell.tagLabel.text = "#" + data.tag!
+        } else {
+            cell.tagLabel.text = nil
         }
         cell.radioButton.tag = indexPath.row
         if data.isDone {
