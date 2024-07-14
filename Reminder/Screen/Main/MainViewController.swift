@@ -12,10 +12,10 @@ import FSCalendar
 final class MainViewController: BaseViewController {
     
     let category = TodoCategory.allCases
-    var todoList: Results<Todo>! 
+//    var todoList: Results<Todo>! 
     var searchList: Results<Todo>! = nil
     let repository = TodoRepository()
-    var folderList: Results<Folder>!
+//    var folderList: Results<Folder>!
     
     let viewModel = MainViewModel()
 
@@ -64,10 +64,10 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
-        todoList = repository.fetchAll()
-        viewModel.inputTodolList = todoList
-        folderList = repository.fetchFolder()
-        print(folderList)
+        viewModel.inputViewDidLoadTrigger.value = ()
+//        todoList = repository.fetchAll()
+//        viewModel.inputTodolList = todoList
+//        folderList = repository.fetchFolder()
         repository.getFileURL()
         bindData()
     }
@@ -158,6 +158,13 @@ final class MainViewController: BaseViewController {
     }
     
     func bindData() {
+        viewModel.outputTodoList.bind { value in
+            self.mainCollectionView.reloadData()
+           
+        }
+        viewModel.outputFolderList.bind { value in
+            self.folderTableVeiw.reloadData()
+        }
         viewModel.outputSearchBarTextValid.bind { value in
             print("outputSearchBarTextValid.bind")
             if value {
@@ -179,12 +186,6 @@ extension MainViewController: UISearchBarDelegate {
     // 실시간 검색
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.inputSearchBarText.value = searchBar.text
-
-        // searchlist 바뀔때마다 searchTableView 테이블 갱신
-//        searchList = todoList.where {
-//            $0.title.contains(searchBar.text ?? "", options: .caseInsensitive)
-//        }
-//        searchTableView.reloadData()
         
     }
 }
@@ -201,7 +202,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.categoryImageView.image = categoryType.image
         cell.categoryImageView.tintColor = categoryType.backgroundColor
         cell.categoryTitle.text = categoryType.rawValue
-        cell.countLabel.text = "\(categoryType.getfilteredList(list: todoList).count)"
+        cell.countLabel.text = "\(categoryType.getfilteredList(list: viewModel.outputTodoList.value).count)"
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -211,7 +212,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         vc.category = category
 //        vc.listTitleLabel.text = category.rawValue
 //        vc.list = Array(category.getfilteredList(list: todoList))
-        vc.resultsList = todoList
+        vc.resultsList = viewModel.outputTodoList.value
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -220,7 +221,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == folderTableVeiw {
-            return folderList.count
+            return viewModel.outputFolderList.value?.count ?? <#default value#>
         } else if tableView == searchTableView {
             guard let searchList = searchList else { return 0 }
             return searchList.count
@@ -231,8 +232,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == folderTableVeiw {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
-            cell.titleLabel.text = folderList[indexPath.row].name
-            cell.countLabel.text = "(\(folderList[indexPath.row].detail.count))"
+            cell.titleLabel.text = viewModel.outputFolderList.value?[indexPath.row].name
+            cell.countLabel.text = "(\(String(describing: viewModel.outputFolderList.value?[indexPath.row].detail.count)))"
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
@@ -244,7 +245,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = FolderedListViewController()
-        vc.folder = folderList[indexPath.row]
+        vc.folder = viewModel.outputFolderList.value?[indexPath.row]
         vc.listTitleLabel.text = folderList[indexPath.row].name
         navigationController?.pushViewController(vc, animated: true)
     }
