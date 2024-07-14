@@ -9,12 +9,15 @@ import UIKit
 import RealmSwift
 import FSCalendar
 
-class MainViewController: BaseViewController {
+final class MainViewController: BaseViewController {
     
     let category = TodoCategory.allCases
     var todoList: Results<Todo>! 
+    var searchList: Results<Todo>! = nil
     let repository = TodoRepository()
     var folderList: Results<Folder>!
+    
+    let viewModel = MainViewModel()
 
     lazy var searchBar = {
        let view = UISearchBar()
@@ -25,12 +28,24 @@ class MainViewController: BaseViewController {
         view.searchBarStyle = .minimal
         return view
     }()
+
+    let mainView = UIView()
+    let searchView = UIView()
+    
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     lazy var folderTableVeiw = {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
         view.register(FolderTableViewCell.self, forCellReuseIdentifier: FolderTableViewCell.id)
+        view.backgroundColor = .secondarySystemBackground
+        return view
+    }()
+    lazy var searchTableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.id)
         view.backgroundColor = .secondarySystemBackground
         return view
     }()
@@ -50,25 +65,34 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         print(#function)
         todoList = repository.fetchAll()
+        viewModel.inputTodolList = todoList
         folderList = repository.fetchFolder()
         print(folderList)
         repository.getFileURL()
-        
+        bindData()
     }
         
     override func configureHierarchy() {
         print(#function)
+        view.addSubview(mainView)
+        view.addSubview(searchView)
         view.addSubview(searchBar)
-        view.addSubview(mainCollectionView)
-        view.addSubview(addView)
-        view.addSubview(folderTableVeiw)
+        mainView.addSubview(mainCollectionView)
+        mainView.addSubview(addView)
+        mainView.addSubview(folderTableVeiw)
+        searchView.addSubview(searchTableView)
     }
     override func configureLayout() {
         print(#function)
+       
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(44)
+        } 
+        mainView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(8)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         addView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -87,6 +111,13 @@ class MainViewController: BaseViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(addView.snp.top)
         }
+        searchView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(8)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        searchTableView.snp.makeConstraints { make in
+            make.edges.equalTo(searchView.snp.edges)
+        }
         
         
     }
@@ -99,6 +130,11 @@ class MainViewController: BaseViewController {
         mainCollectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.id)
         mainCollectionView.backgroundColor = .secondarySystemBackground
         addView.addButton.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
+        mainView.backgroundColor = .secondarySystemBackground
+        mainView.isHidden = false
+        searchView.isHidden = true
+        searchView.backgroundColor = .red
+        searchTableView.backgroundColor = .blue
         
     }
     @objc func addButtonClicked() {
@@ -120,10 +156,37 @@ class MainViewController: BaseViewController {
         layout.itemSize = CGSize(width: width/2, height: (width/2) * 0.55)
         return layout
     }
+    
+    func bindData() {
+        viewModel.outputSearchBarTextValid.bind { value in
+            print("outputSearchBarTextValid.bind")
+            if value {
+                self.mainView.isHidden = true
+                self.searchView.isHidden = false
+            } else {
+                self.mainView.isHidden = false
+                self.searchView.isHidden = true
+            }
+        }
+        viewModel.outputSearchList.bind { value in
+            self.searchList = value
+            self.searchTableView.reloadData()
+        }
+    }
 }
 
 extension MainViewController: UISearchBarDelegate {
-    // 실시간 검색 등
+    // 실시간 검색
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.inputSearchBarText.value = searchBar.text
+
+        // searchlist 바뀔때마다 searchTableView 테이블 갱신
+//        searchList = todoList.where {
+//            $0.title.contains(searchBar.text ?? "", options: .caseInsensitive)
+//        }
+//        searchTableView.reloadData()
+        
+    }
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -156,14 +219,27 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return folderList.count
+        if tableView == folderTableVeiw {
+            return folderList.count
+        } else if tableView == searchTableView {
+            guard let searchList = searchList else { return 0 }
+            return searchList.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
-        cell.titleLabel.text = folderList[indexPath.row].name
-        cell.countLabel.text = "(\(folderList[indexPath.row].detail.count))"
-        return cell
+        if tableView == folderTableVeiw {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
+            cell.titleLabel.text = folderList[indexPath.row].name
+            cell.countLabel.text = "(\(folderList[indexPath.row].detail.count))"
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+            guard let searchList = searchList else { return cell }
+            cell.titleLabel.text = searchList[indexPath.row].title
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
