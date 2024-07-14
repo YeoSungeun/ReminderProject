@@ -215,8 +215,8 @@ extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource
             let id = self.list[indexPath.row].id
             guard let data = self.repository.fetchData(id: id) else { return }
             self.repository.deleteItem(data)
-            
-            self.list = Array(self.repository.fetchAll())
+            guard let folder = self.folder else { return }
+            self.list = self.repository.fetchFolderDetail(folder: folder)
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")
