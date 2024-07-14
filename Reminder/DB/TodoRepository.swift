@@ -53,14 +53,14 @@ final class TodoRepository {
         return value
     }
     
-    func fetchFolderDetail(folder: Folder) -> [Todo] {
+    func fetchFolderDetail(folder: Folder) -> List<Todo>! {
         let id = folder.id
-        guard let value = realm.object(ofType: Folder.self, forPrimaryKey: id)?.detail else {return []}
+        let value = realm.object(ofType: Folder.self, forPrimaryKey: id)?.detail
         
-        return Array(value)
+        return value
     }
     
-    func fetchAll() -> Results<Todo>! {
+    func fetchAll() -> Results<Todo> {
         let value = realm.objects(Todo.self)
         return value
     }

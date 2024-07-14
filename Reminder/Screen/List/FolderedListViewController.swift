@@ -12,7 +12,11 @@ import RealmSwift
 
 final class FolderedListViewController: BaseViewController {
    
-    var folder: Folder?
+    var folder: Folder? {
+        didSet{
+            listTitleLabel.text = folder?.name
+        }
+    }
     
     let listTitleLabel = {
         let view = UILabel()
@@ -62,8 +66,7 @@ final class FolderedListViewController: BaseViewController {
         print(#function)
         if let folder = folder {
             let value = folder.detail
-            let result = Array(value)
-            list = result
+            list = Array(value)
         }
         listCountCondition()
         repository.checkVersion()
@@ -136,26 +139,35 @@ final class FolderedListViewController: BaseViewController {
             title: nil,
             message: nil,
             preferredStyle: .actionSheet)
-        
-        // 2. 버튼 만들기
-        let basic = UIAlertAction(title: "기본", style: .default) { _ in
-            self.list = Array(self.repository.fetchAll())
-            self.tableView.reloadData()
-        }
-        let dueDate = UIAlertAction(title: "마감일", style: .default) { _ in
-            self.list = Array(self.repository.fetchAll().sorted(byKeyPath: "duedate", ascending: true))
-            self.tableView.reloadData()
-        }
-        let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-            self.list = Array(self.repository.fetchAll().where{
-                $0.priority == .upper
-            })
-            self.tableView.reloadData()
+        if let folder = folder {
+            // 2. 버튼 만들기
+            let basic = UIAlertAction(title: "기본", style: .default) { _ in
+                self.list = Array(self.repository.fetchFolderDetail(folder: folder))
+                self.tableView.reloadData()
+            }
+            let dueDateAsc = UIAlertAction(title: "마감일 빠른 순", style: .default) { _ in
+                self.list = Array(self.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: true))
+                self.tableView.reloadData()
+            }
+            let dueDateDesc = UIAlertAction(title: "마감일 느린 순", style: .default) { _ in
+                self.list = Array(self.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: false))
+                self.tableView.reloadData()
+            }
+            let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
+                self.list = Array(self.repository.fetchFolderDetail(folder: folder).where{
+                    $0.priority == Priority.upper
+                })
+                self.tableView.reloadData()
+            }
+            
+            alert.addAction(basic)
+            alert.addAction(dueDateAsc)
+            alert.addAction(dueDateDesc)
+            alert.addAction(priority)
         }
 
-        alert.addAction(basic)
-        alert.addAction(dueDate)
-        alert.addAction(priority)
+
+       
         
         present(alert, animated: true)
     }
@@ -216,7 +228,7 @@ extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource
             guard let data = self.repository.fetchData(id: id) else { return }
             self.repository.deleteItem(data)
             guard let folder = self.folder else { return }
-            self.list = self.repository.fetchFolderDetail(folder: folder)
+            self.list = Array(self.repository.fetchFolderDetail(folder: folder))
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")

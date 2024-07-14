@@ -34,7 +34,7 @@ enum TodoCategory: String, CaseIterable {
     var backgroundColor: UIColor {
         switch self {
         case .today:
-              .systemBlue
+                .systemBlue
         case .upComing:
                 .systemRed
         case .all:
@@ -51,8 +51,7 @@ enum TodoCategory: String, CaseIterable {
         case .today:
             let start = Calendar.current.startOfDay(for: Date())
             lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
-            lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
-                                             start as NSDate, end as NSDate)
+            lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@", start as NSDate, end as NSDate)
             return list.filter(predicate)
         case .upComing:
             return list.where {
@@ -68,6 +67,6 @@ enum TodoCategory: String, CaseIterable {
             }
         }
     }
-
+    
 }
 

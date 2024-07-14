@@ -145,8 +145,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         print(#function,"\(indexPath)")
         let vc = ListViewController()
         let category = category[indexPath.row]
-        vc.listTitleLabel.text = category.rawValue
-        vc.list = category.getfilteredList(list: todoList)
+        vc.category = category
+//        vc.listTitleLabel.text = category.rawValue
+//        vc.list = Array(category.getfilteredList(list: todoList))
+        vc.resultsList = todoList
         navigationController?.pushViewController(vc, animated: true)
     }
 

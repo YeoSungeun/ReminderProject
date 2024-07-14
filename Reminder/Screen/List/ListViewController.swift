@@ -12,8 +12,13 @@ import RealmSwift
 
 final class ListViewController: BaseViewController {
     
+    var category: TodoCategory? {
+        didSet {
+            self.listTitleLabel.text = category?.rawValue
+        }
+    }
     
-    let listTitleLabel = {
+    lazy var listTitleLabel = {
         let view = UILabel()
         view.textColor = .systemBlue
         view.font = .systemFont(ofSize: 30, weight: .heavy)
@@ -35,8 +40,13 @@ final class ListViewController: BaseViewController {
         view.text = "목록이 없습니다."
         return view
     }()
-    
-    var list: Results<Todo>! {
+    var resultsList: Results<Todo>! {
+        didSet {
+            resultsList = category?.getfilteredList(list: resultsList)
+            list = Array(resultsList)
+        }
+    }
+    lazy var list: [Todo] = [] {
         didSet {
             print("list didset")
             if list.count == 0 {
@@ -62,7 +72,6 @@ final class ListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
-        
         listCountCondition()
         repository.checkVersion()
         
@@ -98,6 +107,9 @@ final class ListViewController: BaseViewController {
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = rightBarItem
+        
+        
+        
         
     }
     func listCountCondition() {
@@ -140,17 +152,17 @@ final class ListViewController: BaseViewController {
         
         // 2. 버튼 만들기
         let basic = UIAlertAction(title: "기본", style: .default) { _ in
-            self.list = self.repository.fetchAll()
+            self.list = Array(self.resultsList)
             self.tableView.reloadData()
         }
-        let dueDate = UIAlertAction(title: "마감일", style: .default) { _ in
-            self.list = self.repository.fetchAll().sorted(byKeyPath: "duedate", ascending: true)
+        let dueDate = UIAlertAction(title: "마감일 빠른 순", style: .default) { _ in
+            self.list = Array(self.resultsList.sorted(byKeyPath: "duedate", ascending: true))
             self.tableView.reloadData()
         }
         let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-            self.list = self.repository.fetchAll().where{
+            self.list = Array(self.resultsList.where{
                 $0.priority == .upper
-            }
+            })
             self.tableView.reloadData()
         }
         
@@ -218,7 +230,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             guard let data = self.repository.fetchData(id: id) else { return }
             self.repository.deleteItem(data)
             
-            self.list = self.repository.fetchAll()
+            self.list = Array(self.resultsList)
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")
