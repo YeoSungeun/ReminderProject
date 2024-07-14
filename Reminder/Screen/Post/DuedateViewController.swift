@@ -63,6 +63,7 @@ class DuedateViewController: BaseViewController {
     @objc func backButtonClicked() {
         print(#function)
 //        getDate?(viewModel.outputDate.value ?? Date())
+        viewModel.inputBackButtonClicked.value = ()
         navigationController?.popViewController(animated: true)
     }
     func bindData() {

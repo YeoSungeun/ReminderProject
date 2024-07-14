@@ -11,6 +11,7 @@ class DuedateViewModel {
     var inputDate: Observable<Date?> = Observable(nil)
     var outputDate: Observable<Date?> = Observable(nil)
     var inputClosure: Observable<((Date) -> Void)?> = Observable(nil)
+    var inputBackButtonClicked: Observable<Void?> = Observable(nil)
     
     init() {
         print("viewmodel init")
@@ -18,9 +19,10 @@ class DuedateViewModel {
             self.getDate()
         }
         outputDate.value = Date()
-        inputClosure.bind { _ in
+        inputBackButtonClicked.bind { _ in
             self.inputClosure.value?(self.outputDate.value ?? Date())
         }
+      
     
     }
     
@@ -28,6 +30,7 @@ class DuedateViewModel {
         guard let date = inputDate.value else {
             return
         }
+        print(#function, date)
         outputDate.value = date
         
     }

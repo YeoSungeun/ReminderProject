@@ -129,8 +129,8 @@ final class PostViewController: BaseViewController {
         print(#function)
         let vc = DuedateViewController()
         vc.viewModel.inputClosure.value = { date in
-            print(date)
-            self.viewModel.inputDuedate = date ?? nil
+            print("inputClosure", date)
+            self.viewModel.inputDuedate = date
             self.dueDateLabel.detailLabel.text = date.dateToString()
         }
         navigationController?.pushViewController(vc, animated: true)
@@ -157,7 +157,6 @@ final class PostViewController: BaseViewController {
         //                    }
         //                }
         vc.viewModel.inputClosure.value = { priority in
-            self.viewModel.inputPriority = priority
             self.viewModel.inputPriority = priority
             if priority != .none {
                 self.priorityLabel.detailLabel.text = priority.rawValue
