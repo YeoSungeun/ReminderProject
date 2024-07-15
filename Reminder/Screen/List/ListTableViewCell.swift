@@ -90,4 +90,39 @@ class ListTableViewCell: BaseTableVeiwCell {
         radioButton.tintColor = .systemGray
         priorityLabel.textColor = .systemBlue
     }
+    func configureCell(data: Todo) {
+        titleLabel.text = data.title
+        switch data.priority {
+        case.upper:
+            priorityLabel.text = "!!!"
+        case.middle:
+            priorityLabel.text = "!!"
+        case.lower:
+            priorityLabel.text = "!"
+        case .none:
+            priorityLabel.text = nil
+        }
+        memoLabel.text = data.memo
+        dueDateLabel.text = data.duedate?.dateToString()
+        if let tag = data.tag {
+            tagLabel.text = "#" + data.tag!
+        } else {
+            tagLabel.text = nil
+        }
+        
+        if data.isDone {
+            let image = UIImage(systemName: "circle.inset.filled")
+            radioButton.setImage( image, for: .normal)
+            titleLabel.textColor = .systemGray
+        } else {
+            let image = UIImage(systemName: "circle")
+            radioButton.setImage( image, for: .normal)
+            titleLabel.textColor = .black
+        }
+        
+        
+        
+        
+        
+    }
 }

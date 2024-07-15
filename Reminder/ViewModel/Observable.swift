@@ -24,4 +24,7 @@ class Observable<T> {
         closure(value)
         self.closure = closure
     }
+    func bindLater(closure: @escaping (T) -> Void) {
+        self.closure = closure
+    }
 }

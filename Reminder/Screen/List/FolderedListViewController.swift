@@ -11,7 +11,7 @@ import RealmSwift
 
 
 final class FolderedListViewController: BaseViewController {
-   
+    
     var folder: Folder? {
         didSet{
             listTitleLabel.text = folder?.name
@@ -103,11 +103,11 @@ final class FolderedListViewController: BaseViewController {
         let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(rightBarButtonItemClicked))
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = rightBarItem
-       
+        
     }
     func listCountCondition() {
         print(#function)
-//        list = repository.fetchAll()
+        //        list = repository.fetchAll()
         if list.count == 0 {
             noneListLabel.isHidden = false
             tableView.isHidden = true
@@ -165,9 +165,9 @@ final class FolderedListViewController: BaseViewController {
             alert.addAction(dueDateDesc)
             alert.addAction(priority)
         }
-
-
-       
+        
+        
+        
         
         present(alert, animated: true)
     }
@@ -182,46 +182,19 @@ extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
         let data = list[indexPath.row]
-        cell.titleLabel.text = data.title
-        switch data.priority {
-            case.upper:
-                cell.priorityLabel.text = "!!!"
-            case.middle:
-                cell.priorityLabel.text = "!!"
-            case.lower:
-                cell.priorityLabel.text = "!"
-            case .none:
-                cell.priorityLabel.text = nil
-        }
-        cell.memoLabel.text = data.memo
-        cell.dueDateLabel.text = data.duedate?.dateToString()
-        if let tag = data.tag {
-            cell.tagLabel.text = "#" + data.tag!
-        } else {
-            cell.tagLabel.text = nil
-        }
-        cell.radioButton.tag = indexPath.row
-        if data.isDone {
-            let image = UIImage(systemName: "circle.inset.filled")
-            cell.radioButton.setImage( image, for: .normal)
-            cell.titleLabel.textColor = .systemGray
-        } else {
-            let image = UIImage(systemName: "circle")
-            cell.radioButton.setImage( image, for: .normal)
-            cell.titleLabel.textColor = .black
-        }
-       cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
+        cell.configureCell(data: data)
         
+        cell.radioButton.tag = indexPath.row
+        cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: nil) { action, view, completionHandler in
             let id = self.list[indexPath.row].id

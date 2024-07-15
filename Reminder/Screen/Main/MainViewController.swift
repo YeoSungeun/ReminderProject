@@ -6,16 +6,8 @@
 //
 
 import UIKit
-import RealmSwift
-import FSCalendar
 
 final class MainViewController: BaseViewController {
-    
-    let category = TodoCategory.allCases
-//    var todoList: Results<Todo>! 
-    var searchList: Results<Todo>! = nil
-    let repository = TodoRepository()
-//    var folderList: Results<Folder>!
     
     let viewModel = MainViewModel()
 
@@ -51,24 +43,16 @@ final class MainViewController: BaseViewController {
     }()
     let addView = AddView()
     
-    let start = Calendar.current.startOfDay(for: Date())
-    lazy var end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
-    lazy var predicate = NSPredicate(format: "duedate >= %@ && duedate < %@",
-                                     start as NSDate, end as NSDate)
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainCollectionView.reloadData()
-        folderTableVeiw.reloadData()
+        viewModel.inputViewWillAppearTrigger.value = ()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
         viewModel.inputViewDidLoadTrigger.value = ()
-//        todoList = repository.fetchAll()
-//        viewModel.inputTodolList = todoList
-//        folderList = repository.fetchFolder()
-        repository.getFileURL()
+
         bindData()
     }
         
@@ -131,11 +115,6 @@ final class MainViewController: BaseViewController {
         mainCollectionView.backgroundColor = .secondarySystemBackground
         addView.addButton.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
         mainView.backgroundColor = .secondarySystemBackground
-        mainView.isHidden = false
-        searchView.isHidden = true
-        searchView.backgroundColor = .red
-        searchTableView.backgroundColor = .blue
-        
     }
     @objc func addButtonClicked() {
         let vc = PostViewController()
@@ -158,6 +137,10 @@ final class MainViewController: BaseViewController {
     }
     
     func bindData() {
+        viewModel.outputViewWillAppearTrigger.bind { _ in
+            self.mainCollectionView.reloadData()
+            self.folderTableVeiw.reloadData()
+        }
         viewModel.outputTodoList.bind { value in
             self.mainCollectionView.reloadData()
            
@@ -176,8 +159,14 @@ final class MainViewController: BaseViewController {
             }
         }
         viewModel.outputSearchList.bind { value in
-            self.searchList = value
             self.searchTableView.reloadData()
+        }
+        
+        viewModel.outputFolderTVCellIndexPath.bindLater { value in
+            let vc = FolderedListViewController()
+            vc.folder = self.viewModel.outputFolderData.value
+            vc.listTitleLabel.text = self.viewModel.outputFolderData.value?.name
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
@@ -192,26 +181,27 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return category.count
+        return viewModel.todoCategory.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print(#function,indexPath)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.id, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell()}
-        let categoryType = category[indexPath.item]
+        
+        let categoryType = viewModel.todoCategory[indexPath.item]
         cell.categoryImageView.image = categoryType.image
         cell.categoryImageView.tintColor = categoryType.backgroundColor
         cell.categoryTitle.text = categoryType.rawValue
         cell.countLabel.text = "\(categoryType.getfilteredList(list: viewModel.outputTodoList.value).count)"
         return cell
+        
+        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function,"\(indexPath)")
         let vc = ListViewController()
-        let category = category[indexPath.row]
+        let category = viewModel.todoCategory[indexPath.row]
         vc.category = category
-//        vc.listTitleLabel.text = category.rawValue
-//        vc.list = Array(category.getfilteredList(list: todoList))
         vc.resultsList = viewModel.outputTodoList.value
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -221,10 +211,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == folderTableVeiw {
-            return viewModel.outputFolderList.value?.count ?? <#default value#>
+            return viewModel.outputFolderList.value?.count ?? 0
         } else if tableView == searchTableView {
-            guard let searchList = searchList else { return 0 }
-            return searchList.count
+            return viewModel.outputTodoList.value?.count ?? 0
         }
         return 0
     }
@@ -232,22 +221,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == folderTableVeiw {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
-            cell.titleLabel.text = viewModel.outputFolderList.value?[indexPath.row].name
-            cell.countLabel.text = "(\(String(describing: viewModel.outputFolderList.value?[indexPath.row].detail.count)))"
+            guard let value = viewModel.outputFolderList.value else { return cell }
+            let data = value[indexPath.row]
+            cell.configureCell(data: data)
             return cell
-        } else {
+        } else if tableView == searchTableView {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-            guard let searchList = searchList else { return cell }
-            cell.titleLabel.text = searchList[indexPath.row].title
+            guard let searchList = viewModel.outputSearchList.value else { return cell }
+            let data = searchList[indexPath.row]
+            cell.configureCell(data: data)
             return cell
         }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = FolderedListViewController()
-        vc.folder = viewModel.outputFolderList.value?[indexPath.row]
-        vc.listTitleLabel.text = folderList[indexPath.row].name
-        navigationController?.pushViewController(vc, animated: true)
+        if tableView == folderTableVeiw {
+            viewModel.inputFolderTVCellIndexPath.value = indexPath.row
+        } else if tableView == searchTableView {
+            
+        }
     }
 }
 

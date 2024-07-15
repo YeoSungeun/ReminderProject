@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FolderTableViewCell: BaseTableVeiwCell {
+final class FolderTableViewCell: BaseTableVeiwCell {
     let titleLabel = UILabel()
     let countLabel = UILabel()
 
@@ -24,6 +24,10 @@ class FolderTableViewCell: BaseTableVeiwCell {
             make.centerY.equalTo(titleLabel)
             make.height.equalTo(20)
         }
+    }
+    func configureCell(data: Folder) {
+        titleLabel.text = data.name
+        countLabel.text = "(\(data.detail.count))"
     }
    
 }

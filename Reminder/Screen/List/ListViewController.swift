@@ -182,36 +182,13 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-        //        cell.selectionStyle = .none
+
         let data = list[indexPath.row]
-        cell.titleLabel.text = data.title
-        switch data.priority {
-        case.upper:
-            cell.priorityLabel.text = "!!!"
-        case.middle:
-            cell.priorityLabel.text = "!!"
-        case.lower:
-            cell.priorityLabel.text = "!"
-        case .none:
-            cell.priorityLabel.text = nil
-        }
-        cell.memoLabel.text = data.memo
-        cell.dueDateLabel.text = data.duedate?.dateToString()
-        if let tag = data.tag {
-            cell.tagLabel.text = "#" + data.tag!
-        } else {
-            cell.tagLabel.text = nil
-        }
+        cell.configureCell(data: data)
+
+        // radioButton에 tag 설정,indexPath.row와 같게
         cell.radioButton.tag = indexPath.row
-        if data.isDone {
-            let image = UIImage(systemName: "circle.inset.filled")
-            cell.radioButton.setImage( image, for: .normal)
-            cell.titleLabel.textColor = .systemGray
-        } else {
-            let image = UIImage(systemName: "circle")
-            cell.radioButton.setImage( image, for: .normal)
-            cell.titleLabel.textColor = .black
-        }
+
         cell.radioButton.addTarget(self, action: #selector(radioButtonClicked), for: .touchUpInside)
         
         return cell
