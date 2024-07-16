@@ -12,6 +12,7 @@ final class PostViewModel {
     let repository = TodoRepository()
     
     var inputTitle: Observable<String?> = Observable(nil)
+    var inputSelectedPriority = Observable<Priority>(.lower)
     var outputTitleValid = Observable(false)
     var outputTilte: Observable<String?> = Observable(nil)
     

@@ -40,6 +40,7 @@ final class ListViewController: BaseViewController {
         view.text = "목록이 없습니다."
         return view
     }()
+    
     var resultsList: Results<Todo>! {
         didSet {
             resultsList = category?.getfilteredList(list: resultsList)
@@ -58,8 +59,6 @@ final class ListViewController: BaseViewController {
             }
         }
     }
-    
-    
     let repository = TodoRepository()
     
     override func viewWillAppear(_ animated: Bool) {

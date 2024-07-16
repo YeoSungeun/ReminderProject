@@ -36,6 +36,7 @@
 		A09650202C3DE9F900D3841F /* DuedateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */; };
 		A09650222C3DEA0B00D3841F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650212C3DEA0B00D3841F /* Observable.swift */; };
 		A09650242C3DF73600D3841F /* PriorityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650232C3DF73600D3841F /* PriorityViewModel.swift */; };
+		A0A1F6192C45D8ED0079B737 /* FolderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */; };
 		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
 		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
 		A0A8E4592C36226C00DF551D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */; };
@@ -93,6 +94,7 @@
 		A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuedateViewModel.swift; sourceTree = "<group>"; };
 		A09650212C3DEA0B00D3841F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		A09650232C3DF73600D3841F /* PriorityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewModel.swift; sourceTree = "<group>"; };
+		A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListViewModel.swift; sourceTree = "<group>"; };
 		A0A8E4542C3621D700DF551D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		A0A8E4582C36226C00DF551D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -143,7 +145,6 @@
 				A022434C2C3401A000FC3552 /* Resource */,
 				A022433F2C33FC0D00FC3552 /* Global */,
 				A022433E2C33FC0200FC3552 /* DB */,
-				A096501E2C3DE7FF00D3841F /* ViewModel */,
 				A02243372C33FB8C00FC3552 /* Screen */,
 				A02243232C33FA2600FC3552 /* AppDelegate.swift */,
 				A02243252C33FA2600FC3552 /* SceneDelegate.swift */,
@@ -156,6 +157,7 @@
 		A02243372C33FB8C00FC3552 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				A096BDCA2C4665DA00F6026D /* Cell */,
 				A0A8E4532C3621CC00DF551D /* Main */,
 				A02243382C33FB9700FC3552 /* List */,
 				A02243392C33FBDC00FC3552 /* Post */,
@@ -170,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				A022433A2C33FBF600FC3552 /* ListViewController.swift */,
-				A02243502C3414CF00FC3552 /* ListTableViewCell.swift */,
+				A0262EE82C44445A001FAA74 /* ListViewModel.swift */,
 				A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */,
 			);
 			path = List;
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				A022433C2C33FBFC00FC3552 /* PostViewController.swift */,
+				A0262ED52C3F4595001FAA74 /* PostViewModel.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 		A022433F2C33FC0D00FC3552 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				A09650212C3DEA0B00D3841F /* Observable.swift */,
 				A0B9F7252C37CF780050454B /* Model */,
 				A02243552C344ECA00FC3552 /* Custom */,
 				A02243492C33FD9200FC3552 /* Extension */,
@@ -246,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				A02243602C35594500FC3552 /* DuedateViewController.swift */,
+				A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */,
 			);
 			path = DueDate;
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				A02243662C357B6600FC3552 /* TagViewController.swift */,
+				A0262ED32C3EA640001FAA74 /* TagViewModel.swift */,
 			);
 			path = Tag;
 			sourceTree = "<group>";
@@ -262,32 +268,29 @@
 			isa = PBXGroup;
 			children = (
 				A02243682C357B7300FC3552 /* PriorityViewController.swift */,
+				A09650232C3DF73600D3841F /* PriorityViewModel.swift */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
 		};
-		A096501E2C3DE7FF00D3841F /* ViewModel */ = {
+		A096BDCA2C4665DA00F6026D /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A09650212C3DEA0B00D3841F /* Observable.swift */,
-				A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */,
-				A09650232C3DF73600D3841F /* PriorityViewModel.swift */,
-				A0262ED32C3EA640001FAA74 /* TagViewModel.swift */,
-				A0262ED52C3F4595001FAA74 /* PostViewModel.swift */,
-				A0262EE82C44445A001FAA74 /* ListViewModel.swift */,
-				A0262EEC2C448C99001FAA74 /* MainViewModel.swift */,
+				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
+				A0262EEA2C444BC8001FAA74 /* MainTableViewCell.swift */,
+				A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */,
+				A02243502C3414CF00FC3552 /* ListTableViewCell.swift */,
 			);
-			path = ViewModel;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		A0A8E4532C3621CC00DF551D /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				A0A8E4542C3621D700DF551D /* MainViewController.swift */,
-				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
+				A0262EEC2C448C99001FAA74 /* MainViewModel.swift */,
 				A0B9F7282C37D65B0050454B /* AddView.swift */,
-				A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */,
-				A0262EEA2C444BC8001FAA74 /* MainTableViewCell.swift */,
+				A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				A0B9F7292C37D65B0050454B /* AddView.swift in Sources */,
 				A0B9F7432C3C9FB80050454B /* FolderedListViewController.swift in Sources */,
 				A0262ED42C3EA640001FAA74 /* TagViewModel.swift in Sources */,
+				A0A1F6192C45D8ED0079B737 /* FolderListViewModel.swift in Sources */,
 				A02243442C33FD5400FC3552 /* BaseViewController.swift in Sources */,
 				A02243462C33FD6A00FC3552 /* BaseTableVeiwCell.swift in Sources */,
 				A0262EEB2C444BC9001FAA74 /* MainTableViewCell.swift in Sources */,

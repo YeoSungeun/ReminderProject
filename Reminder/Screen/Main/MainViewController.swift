@@ -6,6 +6,7 @@
 //
 
 import UIKit
+//import RealmSwift
 
 final class MainViewController: BaseViewController {
     
@@ -23,6 +24,8 @@ final class MainViewController: BaseViewController {
 
     let mainView = UIView()
     let searchView = UIView()
+    // TODO: 해결하기
+//    var searchList: Results<Todo>!
     
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     lazy var folderTableVeiw = {
@@ -158,9 +161,9 @@ final class MainViewController: BaseViewController {
                 self.searchView.isHidden = true
             }
         }
-        viewModel.outputSearchList.bind { value in
+        viewModel.outputSearchList.bind(closure: { value in
             self.searchTableView.reloadData()
-        }
+        }) 
         
         viewModel.outputFolderTVCellIndexPath.bindLater { value in
             let vc = FolderedListViewController()
@@ -174,6 +177,7 @@ final class MainViewController: BaseViewController {
 extension MainViewController: UISearchBarDelegate {
     // 실시간 검색
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.inputSearchTrigger.value = ()
         viewModel.inputSearchBarText.value = searchBar.text
         
     }
@@ -188,14 +192,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         print(#function,indexPath)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.id, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell()}
         
+        // TODO: 여기 뷰모델로~
         let categoryType = viewModel.todoCategory[indexPath.item]
         cell.categoryImageView.image = categoryType.image
         cell.categoryImageView.tintColor = categoryType.backgroundColor
         cell.categoryTitle.text = categoryType.rawValue
         cell.countLabel.text = "\(categoryType.getfilteredList(list: viewModel.outputTodoList.value).count)"
         return cell
-        
-        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function,"\(indexPath)")
@@ -227,10 +230,25 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if tableView == searchTableView {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-            guard let searchList = viewModel.outputSearchList.value else { return cell }
-            let data = searchList[indexPath.row]
-            cell.configureCell(data: data)
-            return cell
+//            guard let searchList = viewModel.outputSearchList.value else {
+//                print("여기..?")
+//                return cell
+//            }
+            print("여기아래")
+            print(viewModel.outputSearchList.value)
+            // TODO: 여기다시봐!!다시!!다ㅣㅅ~~~
+            if indexPath.row < viewModel.outputSearchList.value?.count ?? 0 {
+                guard let data = viewModel.outputSearchList.value?[indexPath.row] else {
+                    print("여기아래아래")
+                    return cell}
+                cell.configureCell(data: data)
+                return cell
+            }
+//            guard let data = viewModel.outputSearchList.value?[indexPath.row] else {
+//                print("여기아래아래")
+//                return cell}
+//            cell.configureCell(data: data)
+//            return cell
         }
         return UITableViewCell()
     }

@@ -24,11 +24,13 @@ final class MainViewModel {
     var outputSearchList: Observable<Results<Todo>?> = Observable(nil)
     var outputSearchListCount: Int =  0
     
+
     var inputFolderTVCellIndexPath: Observable<Int> = Observable(0)
     var outputFolderTVCellIndexPath: Observable<Int> = Observable(0)
     var outputFolderData: Observable<Folder?> = Observable(nil)
     
     var inputSearchBarText: Observable<String?> = Observable(nil)
+    var inputSearchTrigger:Observable<Void?> = Observable(nil)
     var outputSearchBarTextValid: Observable<Bool> = Observable(false)
     
     
@@ -45,7 +47,10 @@ final class MainViewModel {
         inputViewWillAppearTrigger.bind { _ in
             self.outputViewWillAppearTrigger.value = ()
         }
-        
+//        inputSearchTrigger.bind { _ in
+//            self.validSearchBarText(self.inputSearchBarText.value)
+//            self.getSearchList(self.inputSearchBarText.value)
+//        }
         inputSearchBarText.bind { value in
             self.validSearchBarText(value)
             self.getSearchList(value)
@@ -66,10 +71,13 @@ final class MainViewModel {
         
     }
     func getSearchList(_ text: String?) {
+//        guard let list = outputTodoList.value else { return }
         guard let text = text, !text.isEmpty else { return }
         outputSearchList.value = outputTodoList.value?.where {
             $0.title.contains(text, options: .caseInsensitive) && $0.isDone == false
         }
+        print(#function)
+        print(outputSearchList.value)
     }
     
     func fetchTodoList() {
@@ -81,5 +89,6 @@ final class MainViewModel {
         outputFolderList.value = repository.fetchFolder()
 //        outputSearchListCount = outputFolderList.value?.count ?? 0
     }
+   
     
 }
