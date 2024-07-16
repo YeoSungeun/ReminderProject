@@ -19,15 +19,16 @@ final class PriorityViewModel {
     var fetchPriority:  ((Priority) -> Void)?
     
     init() {
-        inputPriority.bind { _ in
-            self.getPriority()
+        print("===============PriorityViewModel init===============")
+        inputPriority.bind { [weak self] _ in
+            self?.getPriority()
         }
-//        inputClosure.bind { value in
-//            value?(self.outputPriority.value)
-//        }
-        inputBackButtonClicked.bind { _ in
-            self.inputClosure.value?(self.outputPriority.value)
+        inputBackButtonClicked.bind { [weak self] _ in
+            self?.inputClosure.value?(self?.outputPriority.value ?? .none)
         }
+    }
+    deinit {
+        print("===============PriorityViewModel deinit===============")
     }
     
     func getPriority() {

@@ -10,6 +10,10 @@ import UIKit
 
 final class MainViewController: BaseViewController {
     
+    deinit {
+        print("========MainViewController Deinit============")
+    }
+    
     let viewModel = MainViewModel()
 
     lazy var searchBar = {
@@ -25,11 +29,10 @@ final class MainViewController: BaseViewController {
     let mainView = UIView()
     let searchView = UIView()
     // TODO: 해결하기
-//    var searchList: Results<Todo>!
     
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     lazy var folderTableVeiw = {
-        let view = UITableView()
+        let view = UITableView(frame: .zero, style: .insetGrouped)
         view.delegate = self
         view.dataSource = self
         view.register(FolderTableViewCell.self, forCellReuseIdentifier: FolderTableViewCell.id)
@@ -44,6 +47,7 @@ final class MainViewController: BaseViewController {
         view.backgroundColor = .secondarySystemBackground
         return view
     }()
+    
     let addView = AddView()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +55,7 @@ final class MainViewController: BaseViewController {
         viewModel.inputViewWillAppearTrigger.value = ()
     }
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
@@ -90,7 +95,7 @@ final class MainViewController: BaseViewController {
         mainCollectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(300)
+            make.height.equalTo(320)
         
         }
         folderTableVeiw.snp.makeConstraints { make in
@@ -118,6 +123,10 @@ final class MainViewController: BaseViewController {
         mainCollectionView.backgroundColor = .secondarySystemBackground
         addView.addButton.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
         mainView.backgroundColor = .secondarySystemBackground
+        // 스크롤 안되게
+        mainCollectionView.isScrollEnabled = false
+        folderTableVeiw.isScrollEnabled = false
+        
     }
     @objc func addButtonClicked() {
         let vc = PostViewController()
@@ -201,7 +210,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function,"\(indexPath)")
+//        print(#function,"\(indexPath)")
         let vc = ListViewController()
         let category = viewModel.todoCategory[indexPath.row]
         vc.category = category
@@ -216,6 +225,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == folderTableVeiw {
             return viewModel.outputFolderList.value?.count ?? 0
         } else if tableView == searchTableView {
+//            print("searchTableView Row count",viewModel.outputTodoList.value?.count ?? 0)
             return viewModel.outputTodoList.value?.count ?? 0
         }
         return 0
@@ -230,12 +240,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if tableView == searchTableView {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-//            guard let searchList = viewModel.outputSearchList.value else {
-//                print("여기..?")
-//                return cell
-//            }
-            print("여기아래")
-            print(viewModel.outputSearchList.value)
+
             // TODO: 여기다시봐!!다시!!다ㅣㅅ~~~
             if indexPath.row < viewModel.outputSearchList.value?.count ?? 0 {
                 guard let data = viewModel.outputSearchList.value?[indexPath.row] else {
@@ -244,11 +249,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configureCell(data: data)
                 return cell
             }
-//            guard let data = viewModel.outputSearchList.value?[indexPath.row] else {
-//                print("여기아래아래")
-//                return cell}
-//            cell.configureCell(data: data)
-//            return cell
+
         }
         return UITableViewCell()
     }

@@ -11,6 +11,9 @@ import RealmSwift
 
 
 final class ListViewController: BaseViewController {
+    deinit {
+        print("===============ListViewModel deinit===============")
+    }
     
     var category: TodoCategory? {
         didSet {
@@ -150,19 +153,21 @@ final class ListViewController: BaseViewController {
             preferredStyle: .actionSheet)
         
         // 2. 버튼 만들기
-        let basic = UIAlertAction(title: "기본", style: .default) { _ in
-            self.list = Array(self.resultsList)
-            self.tableView.reloadData()
+        
+        //TODO: 강제언래핑해결하기
+        let basic = UIAlertAction(title: "기본", style: .default) { [weak self] _ in
+            self?.list = Array((self?.resultsList)!)
+            self?.tableView.reloadData()
         }
-        let dueDate = UIAlertAction(title: "마감일 빠른 순", style: .default) { _ in
-            self.list = Array(self.resultsList.sorted(byKeyPath: "duedate", ascending: true))
-            self.tableView.reloadData()
+        let dueDate = UIAlertAction(title: "마감일 빠른 순", style: .default) { [weak self] _ in
+            self?.list = Array((self?.resultsList.sorted(byKeyPath: "duedate", ascending: true))!)
+            self?.tableView.reloadData()
         }
-        let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-            self.list = Array(self.resultsList.where{
+        let priority = UIAlertAction(title: "우선순위 높음", style: .default) { [weak self] _ in
+            self?.list = Array((self?.resultsList.where{
                 $0.priority == .upper
-            })
-            self.tableView.reloadData()
+            } ?? .none)!)
+            self?.tableView.reloadData()
         }
         
         alert.addAction(basic)

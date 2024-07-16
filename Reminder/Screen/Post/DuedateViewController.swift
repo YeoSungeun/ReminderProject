@@ -8,6 +8,10 @@
 import UIKit
 
 class DuedateViewController: BaseViewController {
+    deinit {
+        print("===============DuedateViewController deinit===============")
+    }
+   
     let datePicker = UIDatePicker()
 //    var getDate: ((Date) -> Void)?
     
@@ -67,9 +71,9 @@ class DuedateViewController: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     func bindData() {
-        viewModel.outputDate.bind { value in
+        viewModel.outputDate.bind { [weak self] value in
             guard let value = value else { return }
-            self.dateLabel.text = value.dateToString()
+            self?.dateLabel.text = value.dateToString()
         }
     }
     

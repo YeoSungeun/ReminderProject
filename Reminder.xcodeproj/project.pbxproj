@@ -174,6 +174,7 @@
 				A022433A2C33FBF600FC3552 /* ListViewController.swift */,
 				A0262EE82C44445A001FAA74 /* ListViewModel.swift */,
 				A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */,
+				A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -290,7 +291,6 @@
 				A0A8E4542C3621D700DF551D /* MainViewController.swift */,
 				A0262EEC2C448C99001FAA74 /* MainViewModel.swift */,
 				A0B9F7282C37D65B0050454B /* AddView.swift */,
-				A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";

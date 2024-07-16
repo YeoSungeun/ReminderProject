@@ -9,7 +9,8 @@ import Foundation
 import RealmSwift
 
 final class MainViewModel {
-    
+   
+   
     let repository = TodoRepository()
     
     var inputViewWillAppearTrigger: Observable<Void?> = Observable(nil)
@@ -39,27 +40,32 @@ final class MainViewModel {
  
     
     init() {
-        inputViewDidLoadTrigger.bind { _ in
-            self.fetchTodoList()
-            self.fetchFolderList()
-            self.repository.getFileURL()
+        print("===============MainViewModel init===============")
+        inputViewDidLoadTrigger.bind {[weak self] _ in
+            self?.fetchTodoList()
+            self?.fetchFolderList()
+            self?.repository.getFileURL()
         }
-        inputViewWillAppearTrigger.bind { _ in
-            self.outputViewWillAppearTrigger.value = ()
+        inputViewWillAppearTrigger.bind { [weak self] _ in
+            self?.outputViewWillAppearTrigger.value = ()
         }
 //        inputSearchTrigger.bind { _ in
 //            self.validSearchBarText(self.inputSearchBarText.value)
 //            self.getSearchList(self.inputSearchBarText.value)
 //        }
-        inputSearchBarText.bind { value in
-            self.validSearchBarText(value)
-            self.getSearchList(value)
+        inputSearchBarText.bind { [weak self] value in
+            self?.validSearchBarText(value)
+            self?.getSearchList(value)
         }
-        inputFolderTVCellIndexPath.bind { value in
-            self.outputFolderTVCellIndexPath.value = value
-            self.outputFolderData.value = self.outputFolderList.value?[value]
+        inputFolderTVCellIndexPath.bind { [weak self] value in
+            self?.outputFolderTVCellIndexPath.value = value
+            self?.outputFolderData.value = self?.outputFolderList.value?[value]
         }
     }
+    deinit {
+        print("===============MainViewModel deinit===============")
+    }
+    
     
     func validSearchBarText(_ text: String?) {
         guard let text = text, !text.isEmpty else {
@@ -73,7 +79,8 @@ final class MainViewModel {
     func getSearchList(_ text: String?) {
 //        guard let list = outputTodoList.value else { return }
         guard let text = text, !text.isEmpty else { return }
-        outputSearchList.value = outputTodoList.value?.where {
+       
+        outputSearchList.value = outputTodoList.value?.where { 
             $0.title.contains(text, options: .caseInsensitive) && $0.isDone == false
         }
         print(#function)

@@ -30,15 +30,19 @@ final class PostViewModel {
     var inputAddButtonClicked: Observable<Void?> = Observable(nil)
     
     init() {
-        inputTitle.bind { value in
-            self.validTitle(value)
+        print("===============PostViewModel init===============")
+        inputTitle.bind { [weak self] value in
+            self?.validTitle(value)
         }
-        inputAddButtonClicked.bind { _ in
-            guard let title = self.outputTilte.value else { return }
-            let data = Todo(title: title, memo: self.inputMemo, duedate: self.inputDuedate, tag: self.inputTag, priority: self.inputPriority)
-            self.saveTodo(data)
+        inputAddButtonClicked.bind { [weak self] _ in
+            guard let title = self?.outputTilte.value else { return }
+            let data = Todo(title: title, memo: self?.inputMemo, duedate: self?.inputDuedate, tag: self?.inputTag, priority: self?.inputPriority ?? .none)
+            self?.saveTodo(data)
         }
         
+    }
+    deinit {
+        print("===============PostViewModel deinit===============")
     }
     
     func validTitle(_ title: String?) {

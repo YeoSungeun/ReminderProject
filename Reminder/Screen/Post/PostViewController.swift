@@ -9,6 +9,10 @@ import UIKit
 import RealmSwift
 
 final class PostViewController: BaseViewController {
+    
+    deinit {
+        print("===============PostViewController deinit===============")
+    }
     // MARK: lazy로 하면 되는듯
     lazy var cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonClicked))
     lazy var addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonClicked))
@@ -52,8 +56,6 @@ final class PostViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindData()
-        
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         reloadTableView?()
@@ -118,6 +120,7 @@ final class PostViewController: BaseViewController {
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = addButton
         addButton.isEnabled = false
+        addImageLabel.isHidden = true
         
         dueDateLabel.moreButton.addTarget(self, action: #selector(dueDateLabelClicked), for: .touchUpInside)
         tagLabel.moreButton.addTarget(self, action: #selector(tagLabelClicked), for: .touchUpInside)
@@ -128,20 +131,20 @@ final class PostViewController: BaseViewController {
     @objc func dueDateLabelClicked() {
         print(#function)
         let vc = DuedateViewController()
-        vc.viewModel.inputClosure.value = { date in
+        vc.viewModel.inputClosure.value = { [weak self] date in
             print("inputClosure", date)
-            self.viewModel.inputDuedate = date
-            self.dueDateLabel.detailLabel.text = date.dateToString()
+            self?.viewModel.inputDuedate = date
+            self?.dueDateLabel.detailLabel.text = date.dateToString()
         }
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func tagLabelClicked() {
         print(#function)
         let vc = TagViewController()
-        vc.viewModel.inputClosure.value = { tag in
+        vc.viewModel.inputClosure.value = { [weak self] tag in
             print(tag)
-            self.viewModel.inputTag = tag ?? nil
-            self.tagLabel.detailLabel.text = "#" + tag
+            self?.viewModel.inputTag = tag
+            self?.tagLabel.detailLabel.text = "#" + tag
         }
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -149,29 +152,15 @@ final class PostViewController: BaseViewController {
     @objc func priorityLabelClicked() {
         print(#function)
         let vc = PriorityViewController()
-        //                vc.viewModel.fetchPriority = { priority in
-        //                    print(priority)
-        //                    self.priorityType = priority
-        //                    if priority != .none {
-        //                        self.priorityLabel.detailLabel.text = priority.rawValue
-        //                    }
-        //                }
-        vc.viewModel.inputClosure.value = { priority in
-            self.viewModel.inputPriority = priority
+       
+        vc.viewModel.inputClosure.value = { [weak self] priority in
+            self?.viewModel.inputPriority = priority
             if priority != .none {
-                self.priorityLabel.detailLabel.text = priority.rawValue
+                self?.priorityLabel.detailLabel.text = priority.rawValue
                 
             }
         }
-        
-        //        vc.viewModel.outputPriority.bind { priority in
-        //            print(priority)
-        //            self.priorityType = priority
-        //            if priority != .none {
-        //                self.priorityLabel.detailLabel.text = priority.rawValue
-        //            }
-        //        }
-        //
+
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -197,8 +186,8 @@ final class PostViewController: BaseViewController {
         dismiss(animated: true)
     }
     func bindData() {
-        viewModel.outputTitleValid.bind { value in
-            self.addButton.isEnabled = value
+        viewModel.outputTitleValid.bind { [weak self] value in
+            self?.addButton.isEnabled = value
         }
         
     }

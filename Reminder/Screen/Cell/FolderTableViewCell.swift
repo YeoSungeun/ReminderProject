@@ -8,6 +8,7 @@
 import UIKit
 
 final class FolderTableViewCell: BaseTableVeiwCell {
+    
     let titleLabel = UILabel()
     let countLabel = UILabel()
 

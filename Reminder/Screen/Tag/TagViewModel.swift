@@ -15,12 +15,16 @@ final class TagViewModel {
     var inputClosure: Observable<((String) -> Void)?> = Observable(nil)
     
     init() {
-        inputTag.bind { _ in
-            self.getTag()
+        print("===============TagViewModel init===============")
+        inputTag.bind { [weak self] _ in
+            self?.getTag()
         }
-        inputBackButtonClicked.bind { _ in
-            self.inputClosure.value?(self.outputTag.value ?? "")
+        inputBackButtonClicked.bind { [weak self] _ in
+            self?.inputClosure.value?(self?.outputTag.value ?? "")
         }
+    }
+    deinit {
+        print("===============TagViewModel deinit===============")
     }
     func getTag() {
         guard let tag = inputTag.value, !tag.isEmpty else {

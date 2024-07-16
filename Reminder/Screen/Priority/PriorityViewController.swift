@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 final class PriorityViewController: BaseViewController {
+    deinit {
+        print("===============PriorityViewController deinit===============")
+    }
     lazy var segmentControl = {
         let segment = UISegmentedControl()
         for i in 0...(Priority.allCases.count - 1) {
@@ -70,8 +73,8 @@ final class PriorityViewController: BaseViewController {
         viewModel.inputPriority.value = segment.selectedSegmentIndex
     }
     func bindData() {
-        viewModel.outputPriority.bind { value in
-            self.priorityLabel.backgroundColor = value.color
+        viewModel.outputPriority.bind { [weak self] value in
+            self?.priorityLabel.backgroundColor = value.color
         }
     }
 }

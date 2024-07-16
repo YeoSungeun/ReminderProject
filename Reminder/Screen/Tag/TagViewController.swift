@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 final class TagViewController: BaseViewController {
+    deinit {
+        print("===============TagViewController deinit===============")
+    }
     
     let tagTextField = {
         let view = UITextField()

@@ -11,7 +11,9 @@ import RealmSwift
 
 
 final class FolderedListViewController: BaseViewController {
-    
+    deinit {
+        print("===============FolderListViewModel deinit===============")
+    }
     var folder: Folder? {
         didSet{
             listTitleLabel.text = folder?.name
@@ -141,23 +143,24 @@ final class FolderedListViewController: BaseViewController {
             preferredStyle: .actionSheet)
         if let folder = folder {
             // 2. 버튼 만들기
-            let basic = UIAlertAction(title: "기본", style: .default) { _ in
-                self.list = Array(self.repository.fetchFolderDetail(folder: folder))
-                self.tableView.reloadData()
+            // TODO: 강제언래핑 해결
+            let basic = UIAlertAction(title: "기본", style: .default) { [weak self] _ in
+                self?.list = Array((self?.repository.fetchFolderDetail(folder: folder))!)
+                self?.tableView.reloadData()
             }
-            let dueDateAsc = UIAlertAction(title: "마감일 빠른 순", style: .default) { _ in
-                self.list = Array(self.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: true))
-                self.tableView.reloadData()
+            let dueDateAsc = UIAlertAction(title: "마감일 빠른 순", style: .default) { [weak self]_ in
+                self?.list = Array((self?.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: true))!)
+                self?.tableView.reloadData()
             }
-            let dueDateDesc = UIAlertAction(title: "마감일 느린 순", style: .default) { _ in
-                self.list = Array(self.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: false))
-                self.tableView.reloadData()
+            let dueDateDesc = UIAlertAction(title: "마감일 느린 순", style: .default) { [weak self] _ in
+                self?.list = Array((self?.repository.fetchFolderDetail(folder: folder).sorted(byKeyPath: "duedate", ascending: false))!)
+                self?.tableView.reloadData()
             }
-            let priority = UIAlertAction(title: "우선순위 높음", style: .default) { _ in
-                self.list = Array(self.repository.fetchFolderDetail(folder: folder).where{
+            let priority = UIAlertAction(title: "우선순위 높음", style: .default) {  [weak self] _ in
+                self?.list = Array((self?.repository.fetchFolderDetail(folder: folder).where{
                     $0.priority == Priority.upper
-                })
-                self.tableView.reloadData()
+                })!)
+                self?.tableView.reloadData()
             }
             
             alert.addAction(basic)
@@ -196,12 +199,12 @@ extension FolderedListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: nil) { action, view, completionHandler in
-            let id = self.list[indexPath.row].id
-            guard let data = self.repository.fetchData(id: id) else { return }
-            self.repository.deleteItem(data)
-            guard let folder = self.folder else { return }
-            self.list = Array(self.repository.fetchFolderDetail(folder: folder))
+        let delete = UIContextualAction(style: .destructive, title: nil) {  [weak self] action, view, completionHandler in
+            let id = self?.list[indexPath.row].id
+            guard let data = self?.repository.fetchData(id: id ?? ObjectId()) else { return }
+            self?.repository.deleteItem(data)
+            guard let folder = self?.folder else { return }
+            self?.list = Array(((self?.repository.fetchFolderDetail(folder: folder)!)!))
             tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")

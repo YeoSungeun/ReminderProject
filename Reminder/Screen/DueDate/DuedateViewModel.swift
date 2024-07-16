@@ -14,16 +14,17 @@ class DuedateViewModel {
     var inputBackButtonClicked: Observable<Void?> = Observable(nil)
     
     init() {
-        print("viewmodel init")
-        inputDate.bind { _ in
-            self.getDate()
+        print("===============DuedateViewModel init===============")
+        inputDate.bind { [weak self] _ in
+            self?.getDate()
         }
         outputDate.value = Date()
-        inputBackButtonClicked.bind { _ in
-            self.inputClosure.value?(self.outputDate.value ?? Date())
+        inputBackButtonClicked.bind { [weak self] _ in
+            self?.inputClosure.value?(self?.outputDate.value ?? Date())
         }
-      
-    
+    }
+    deinit {
+        print("===============DuedateViewModel deinit===============")
     }
     
     private func getDate() {
