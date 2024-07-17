@@ -35,7 +35,7 @@ final class MainViewController: BaseViewController {
         let view = UITableView(frame: .zero, style: .insetGrouped)
         view.delegate = self
         view.dataSource = self
-        view.register(FolderTableViewCell.self, forCellReuseIdentifier: FolderTableViewCell.id)
+        view.register(FolderDetailTableViewCell.self, forCellReuseIdentifier: FolderDetailTableViewCell.id)
         view.backgroundColor = .secondarySystemBackground
         return view
     }()
@@ -155,6 +155,7 @@ final class MainViewController: BaseViewController {
         }
         viewModel.outputTodoList.bind { value in
             self.mainCollectionView.reloadData()
+            
            
         }
         viewModel.outputFolderList.bind { value in
@@ -194,7 +195,7 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.todoCategory.count
+        return viewModel.todoCategory.count 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -206,7 +207,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.categoryImageView.image = categoryType.image
         cell.categoryImageView.tintColor = categoryType.backgroundColor
         cell.categoryTitle.text = categoryType.rawValue
-        cell.countLabel.text = "\(categoryType.getfilteredList(list: viewModel.outputTodoList.value).count)"
+        print("indexPath.item: \(indexPath.item),viewModel.outputTodoList.value?.count : \(viewModel.outputTodoList.value?.count ?? 0) ")
+        if indexPath.item < viewModel.outputTodoList.value?.count ?? 0 {
+            cell.countLabel.text = "\(categoryType.getfilteredList(list: viewModel.outputTodoList.value).count)"
+        } else {
+            cell.countLabel.text = "0"
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -233,11 +239,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == folderTableVeiw {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderTableViewCell.id, for: indexPath) as? FolderTableViewCell else { return UITableViewCell() }
-            guard let value = viewModel.outputFolderList.value else { return cell }
-            let data = value[indexPath.row]
-            cell.configureCell(data: data)
-            return cell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderDetailTableViewCell.id, for: indexPath) as? FolderDetailTableViewCell else { return UITableViewCell() }
+            if indexPath.row < viewModel.outputFolderList.value?.count ?? 0 {
+                guard let value = viewModel.outputFolderList.value else { return cell }
+                let data = value[indexPath.row]
+                cell.configureCell(data: data)
+                return cell
+            }
         } else if tableView == searchTableView {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.id, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
 

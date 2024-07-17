@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FolderTableViewCell: BaseTableVeiwCell {
+final class FolderDetailTableViewCell: BaseTableVeiwCell {
     
     let titleLabel = UILabel()
     let countLabel = UILabel()

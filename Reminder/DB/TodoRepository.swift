@@ -19,12 +19,20 @@ final class TodoRepository {
     
     func createItem(_ data: Todo) {
         
-        let folder = realm.objects(Folder.self).where {
-            $0.name == "공부"
-        }
+//        let folder = realm.objects(Folder.self).where {
+//            $0.name == "공부"
+//        }
+//        do {
+//            try realm.write {
+//                folder.first?.detail.append(data)
+//            }
+//        } catch {
+//            print("Realm Error")
+//        }
+        
         do {
             try realm.write {
-                folder.first?.detail.append(data)
+                realm.add(data)
             }
         } catch {
             print("Realm Error")

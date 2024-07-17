@@ -14,10 +14,14 @@ class MainTableViewCell: BaseTableVeiwCell {
     
     override func configureHierarchy() {
         contentView.addSubview(view)
+        view.addSubview(collectionView)
     }
     override func configureLayout() {
         view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.snp.edges)
         }
     }
     override func configureView() {

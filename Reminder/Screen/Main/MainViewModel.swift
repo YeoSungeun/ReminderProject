@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 final class MainViewModel {
-   
-   
+    
+    
     let repository = TodoRepository()
     
     var inputViewWillAppearTrigger: Observable<Void?> = Observable(nil)
@@ -25,7 +25,7 @@ final class MainViewModel {
     var outputSearchList: Observable<Results<Todo>?> = Observable(nil)
     var outputSearchListCount: Int =  0
     
-
+    
     var inputFolderTVCellIndexPath: Observable<Int> = Observable(0)
     var outputFolderTVCellIndexPath: Observable<Int> = Observable(0)
     var outputFolderData: Observable<Folder?> = Observable(nil)
@@ -37,11 +37,11 @@ final class MainViewModel {
     
     
     var todoCategory = TodoCategory.allCases
- 
+    
     
     init() {
         print("===============MainViewModel init===============")
-        inputViewDidLoadTrigger.bind {[weak self] _ in
+        inputViewDidLoadTrigger.bindLater {[weak self] _ in
             self?.fetchTodoList()
             self?.fetchFolderList()
             self?.repository.getFileURL()
@@ -49,10 +49,10 @@ final class MainViewModel {
         inputViewWillAppearTrigger.bind { [weak self] _ in
             self?.outputViewWillAppearTrigger.value = ()
         }
-//        inputSearchTrigger.bind { _ in
-//            self.validSearchBarText(self.inputSearchBarText.value)
-//            self.getSearchList(self.inputSearchBarText.value)
-//        }
+        //        inputSearchTrigger.bind { _ in
+        //            self.validSearchBarText(self.inputSearchBarText.value)
+        //            self.getSearchList(self.inputSearchBarText.value)
+        //        }
         inputSearchBarText.bind { [weak self] value in
             self?.validSearchBarText(value)
             self?.getSearchList(value)
@@ -77,10 +77,10 @@ final class MainViewModel {
         
     }
     func getSearchList(_ text: String?) {
-//        guard let list = outputTodoList.value else { return }
+        //        guard let list = outputTodoList.value else { return }
         guard let text = text, !text.isEmpty else { return }
-       
-        outputSearchList.value = outputTodoList.value?.where { 
+        
+        outputSearchList.value = outputTodoList.value?.where {
             $0.title.contains(text, options: .caseInsensitive) && $0.isDone == false
         }
         print(#function)
@@ -88,14 +88,22 @@ final class MainViewModel {
     }
     
     func fetchTodoList() {
-        outputTodoList.value = repository.fetchAll()
-//        outputFolderListCount = outputTodoList.value?.count ?? 0
+//        DispatchQueue.main.async {
+            
+            self.outputTodoList.value = self.repository.fetchAll()
+            print("outputTodolist", self.outputTodoList.value)
+            
+//        }
+        
+        //        outputFolderListCount = outputTodoList.value?.count ?? 0
     }
     
     func fetchFolderList() {
-        outputFolderList.value = repository.fetchFolder()
-//        outputSearchListCount = outputFolderList.value?.count ?? 0
+//        DispatchQueue.main.async {
+            self.outputFolderList.value = self.repository.fetchFolder()
+//        }
+        //        outputSearchListCount = outputFolderList.value?.count ?? 0
     }
-   
+    
     
 }

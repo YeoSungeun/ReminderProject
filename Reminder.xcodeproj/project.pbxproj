@@ -36,6 +36,7 @@
 		A09650202C3DE9F900D3841F /* DuedateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */; };
 		A09650222C3DEA0B00D3841F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650212C3DEA0B00D3841F /* Observable.swift */; };
 		A09650242C3DF73600D3841F /* PriorityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09650232C3DF73600D3841F /* PriorityViewModel.swift */; };
+		A096BDCC2C47335400F6026D /* FolderListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096BDCB2C47335400F6026D /* FolderListTableViewCell.swift */; };
 		A0A1F6192C45D8ED0079B737 /* FolderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */; };
 		A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4542C3621D700DF551D /* MainViewController.swift */; };
 		A0A8E4572C36225100DF551D /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */; };
@@ -46,7 +47,7 @@
 		A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72A2C37D67A0050454B /* BaseView.swift */; };
 		A0B9F72D2C390CF80050454B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F72C2C390CF80050454B /* Date+Extension.swift */; };
 		A0B9F7302C39A3CE0050454B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A0B9F72F2C39A3CE0050454B /* FSCalendar */; };
-		A0B9F7412C3C99F80050454B /* FolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */; };
+		A0B9F7412C3C99F80050454B /* FolderDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7402C3C99F80050454B /* FolderDetailTableViewCell.swift */; };
 		A0B9F7432C3C9FB80050454B /* FolderedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */; };
 		A0DE66AD2C3684FF00DF5610 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A022434E2C3402BB00FC3552 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		A096501F2C3DE9F900D3841F /* DuedateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuedateViewModel.swift; sourceTree = "<group>"; };
 		A09650212C3DEA0B00D3841F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		A09650232C3DF73600D3841F /* PriorityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewModel.swift; sourceTree = "<group>"; };
+		A096BDCB2C47335400F6026D /* FolderListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListTableViewCell.swift; sourceTree = "<group>"; };
 		A0A1F6182C45D8ED0079B737 /* FolderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListViewModel.swift; sourceTree = "<group>"; };
 		A0A8E4542C3621D700DF551D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -103,7 +105,7 @@
 		A0B9F7282C37D65B0050454B /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		A0B9F72A2C37D67A0050454B /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		A0B9F72C2C390CF80050454B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTableViewCell.swift; sourceTree = "<group>"; };
+		A0B9F7402C3C99F80050454B /* FolderDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailTableViewCell.swift; sourceTree = "<group>"; };
 		A0B9F7422C3C9FB80050454B /* FolderedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderedListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,9 +279,10 @@
 		A096BDCA2C4665DA00F6026D /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
 				A0262EEA2C444BC8001FAA74 /* MainTableViewCell.swift */,
-				A0B9F7402C3C99F80050454B /* FolderTableViewCell.swift */,
+				A0A8E4562C36225100DF551D /* MainCollectionViewCell.swift */,
+				A096BDCB2C47335400F6026D /* FolderListTableViewCell.swift */,
+				A0B9F7402C3C99F80050454B /* FolderDetailTableViewCell.swift */,
 				A02243502C3414CF00FC3552 /* ListTableViewCell.swift */,
 			);
 			path = Cell;
@@ -401,7 +404,8 @@
 				A022433B2C33FBF600FC3552 /* ListViewController.swift in Sources */,
 				A0A8E4552C3621D700DF551D /* MainViewController.swift in Sources */,
 				A0B9F72B2C37D67A0050454B /* BaseView.swift in Sources */,
-				A0B9F7412C3C99F80050454B /* FolderTableViewCell.swift in Sources */,
+				A096BDCC2C47335400F6026D /* FolderListTableViewCell.swift in Sources */,
+				A0B9F7412C3C99F80050454B /* FolderDetailTableViewCell.swift in Sources */,
 				A09650222C3DEA0B00D3841F /* Observable.swift in Sources */,
 				A02243262C33FA2600FC3552 /* SceneDelegate.swift in Sources */,
 				A0B9F7242C37B8250050454B /* TodoRepository.swift in Sources */,

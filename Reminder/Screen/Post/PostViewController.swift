@@ -58,6 +58,7 @@ final class PostViewController: BaseViewController {
         bindData()
     }
     override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
         reloadTableView?()
     }
     override func configureHierarchy() {
